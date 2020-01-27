@@ -1,4 +1,4 @@
-package ipp.estg.lei.cmu.trabalhopratico.main;
+package game;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,25 +16,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import ipp.estg.lei.cmu.trabalhopratico.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link GamePlayFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- */
+
 public class GamePlayFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-    private OnFragmentInteractionListener mListener;
-
     TextView textTXT;
     TextView questioncTXT;
     EditText userInput;
+    EditText tipTXT;
     Button checkButton;
     private int counter = 0;
+    private int[] attempts = new int[12];
+
 
     public GamePlayFragment() {
         // Required empty public constructor
@@ -54,8 +53,21 @@ public class GamePlayFragment extends Fragment {
         textTXT= mViewContent.findViewById(R.id.questionTXT);
         textTXT.setText(questionGeneration());
         userInput = mViewContent.findViewById(R.id.replyText);
+        tipTXT = mViewContent.findViewById(R.id.gameTipsTxt);
         questioncTXT = mViewContent.findViewById(R.id.counterTXT);
         checkButton = mViewContent.findViewById(R.id.checkButton);
+
+        for(int ix=0; ix<12; ix++)
+            attempts[ix]=0; //Inicializa o array de tentativas
+        final String[] q_partstip = textTXT.getText().toString().substring(0, textTXT.getText().toString().indexOf("=")).split(" ");
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                int first = Integer.parseInt(q_partstip[0]), second = Integer.parseInt(q_partstip[2]);
+                     tipTXT.setText(generateTip(first, second, q_partstip[3]));
+            }
+        }, 15000);
+
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +85,13 @@ public class GamePlayFragment extends Fragment {
                     alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             textTXT.setText(questionGeneration());
+                            new Timer().schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    //Timer para gerar uma tip ao utilizador
+
+                                }
+                            }, 15000);
                             questioncTXT.setText(" Questões respondidas:"+ counter);
                         }
                     });
@@ -87,7 +106,7 @@ public class GamePlayFragment extends Fragment {
                 if(counter==12){
                     AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create(); //Read Update
                     alertDialog.setTitle("Jogo terminado");
-                    alertDialog.setMessage("Terminou o jogo, respondendo às 12 questões corretamente!");
+                    alertDialog.setMessage("Terminou o jogo, respondendo às 12 questões corretamente! Pontuação alcançada: "+calculateScore());
                     alertDialog.setButton("Voltar ao ínicio", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             FragmentManager fm = getFragmentManager();
@@ -105,13 +124,6 @@ public class GamePlayFragment extends Fragment {
         return mViewContent;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     public String questionGeneration(){
         if(counter<3){
             String operator = "+";
@@ -121,8 +133,8 @@ public class GamePlayFragment extends Fragment {
             } else if (random == 1) {
                 operator = "-";
             }
-            return (int) (Math.floor(Math.random() * 100)) + " " + operator + " " +
-                    (int) (Math.floor(Math.random() * 100)) + " = x";
+            return (int) (Math.floor(Math.random() * 15)) + " " + operator + " " +
+                    (int) (Math.floor(Math.random() * 15)) + " = x";
         }else if(counter<6){
             String operator = "*";
             int random = (int) Math.floor((Math.random() * 1));
@@ -131,8 +143,8 @@ public class GamePlayFragment extends Fragment {
             } else if (random == 1) {
                 operator = "/";
             }
-            return (int) (Math.floor(Math.random() * 100)) + " " + operator + " " +
-                    (int) (Math.floor(Math.random() * 100)) + " = x";
+            return (int) (Math.floor(Math.random() * 10)) + " " + operator + " " +
+                    (int) (Math.floor(Math.random() * 10)) + " = x";
         }else if(counter<12){
             String operator = "+";
             int random = (int) Math.floor((Math.random() * 3));
@@ -145,13 +157,14 @@ public class GamePlayFragment extends Fragment {
             } else if (random == 3) {
                 operator = "/";
             }
-            return (int) (Math.floor(Math.random() * 100)) + " " + operator + " " +
-                    (int) (Math.floor(Math.random() * 100)) + " = x";
+            return (int) (Math.floor(Math.random() * 15)) + " " + operator + " " +
+                    (int) (Math.floor(Math.random() * 15)) + " = x";
         }
         return  "";
     }
 
     public boolean checkResults(int n1, int n2, String op, int ans){
+        attempts[counter]++;
         if (op.equals("+")) {
             if (n1 + n2 == ans) {
                 counter++;
@@ -176,36 +189,34 @@ public class GamePlayFragment extends Fragment {
         return false;
     }
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+    private int calculateScore(){
+       int total = 120;
+        for(int ix=0; ix<12; ix++){
+            int lostPoints;
+            if(attempts[ix]>9)
+                lostPoints=9;
+            else
+                lostPoints=attempts[ix]-1;
+            total = total - lostPoints;
         }
+        return total;
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    private String generateTip(int n1, int n2, String op){
+
+        int ans=0;
+        if (op.equals("+")) {
+            ans = n1 + n2 ;
+        } else if (op.equals("-")) {
+            ans = n1-n2;
+        } else if (op.equals("*")) {
+            ans = n1*n2;
+        } else if (op.equals("/")) {
+            ans= n1/n2;
+        }
+        int firstDigit = Integer.parseInt(Integer.toString(ans).substring(0, 1));
+        return "Uma ajuda! \n " +
+                "O primeiro dígito do número é: "+firstDigit;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

@@ -1,4 +1,4 @@
-package ipp.estg.lei.cmu.trabalhopratico.main;
+package game;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,8 +12,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import ipp.estg.lei.cmu.trabalhopratico.R;
+import game.notification.NotifcationBroadcastReceiver;
 
-public class GameActivity extends AppCompatActivity implements GameEntranceFragment.OnFragmentInteractionListener{
+public class GameActivity extends AppCompatActivity implements GameEntranceFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

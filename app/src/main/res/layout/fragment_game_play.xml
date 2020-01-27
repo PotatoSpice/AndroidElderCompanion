@@ -20,7 +20,7 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="63dp">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -41,7 +41,7 @@
 
                 <EditText
                     android:id="@+id/replyText"
-                    android:layout_width="100dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="number"
@@ -68,6 +68,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Questões respondidas:"
+        android:textSize="24sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="54dp" />
+
+    <EditText
+        android:id="@+id/gameTipsTxt"
+        android:layout_width="match_parent"
+        android:layout_height="316dp"
         android:textSize="24sp" />
 
 </LinearLayout>

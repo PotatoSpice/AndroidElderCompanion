@@ -1,4 +1,4 @@
-package ipp.estg.lei.cmu.trabalhopratico.main;
+package game.notification;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,6 +10,7 @@ import android.provider.Settings;
 
 import androidx.core.app.NotificationCompat;
 
+import game.GameActivity;
 import ipp.estg.lei.cmu.trabalhopratico.R;
 
 public class NotificationClass {

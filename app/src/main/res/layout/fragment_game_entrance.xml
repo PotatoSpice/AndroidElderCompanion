@@ -25,7 +25,7 @@
         android:textSize="36sp" />
 
     <EditText
-        android:id="@+id/gameRulesTxt"
+        android:id="@+id/gameTipsTxt"
         android:layout_width="match_parent"
         android:layout_height="342dp"
         android:hint="@string/gameInformationText"
