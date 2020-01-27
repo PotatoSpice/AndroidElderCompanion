@@ -3,6 +3,7 @@ package ipp.estg.lei.cmu.trabalhopratico;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import ipp.estg.lei.cmu.trabalhopratico.main.MainMenuActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -54,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         findViewById(R.id.signInButton).setOnClickListener(this);
         findViewById(R.id.createAccountButton).setOnClickListener(this);
-        findViewById(R.id.signOutButton).setOnClickListener(this); // para testes
+        // findViewById(R.id.signOutButton).setOnClickListener(this); // para testes
     }
 
     @Override
@@ -168,11 +171,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 findViewById(R.id.emailPasswordButtons).setVisibility(View.GONE);
                 findViewById(R.id.emailPasswordFields).setVisibility(View.GONE);
-                findViewById(R.id.signOutButton).setVisibility(View.VISIBLE);
+                // findViewById(R.id.signOutButton).setVisibility(View.VISIBLE); // para testes
 
                 // IR PARA A ACTIVITY COM O MENU PRINCIPAL DA APP
-                // startActivity(new Intent(this, MainMenuActivity.class));
-                // finish(); // remover esta activity da stack para prevenir que o user volte para trás
+                startActivity(new Intent(this, MainMenuActivity.class));
+                finish(); // remover esta activity da stack para prevenir que o user volte para trás
             }
 
         } else {
@@ -189,7 +192,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 findViewById(R.id.emailPasswordButtons).setVisibility(View.VISIBLE);
                 findViewById(R.id.emailPasswordFields).setVisibility(View.VISIBLE);
-                findViewById(R.id.signOutButton).setVisibility(View.GONE);
+                // findViewById(R.id.signOutButton).setVisibility(View.GONE); // para testes
             }
         }
         userEmail.setText(null);
@@ -222,8 +225,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 isCreatingAccount = false;
             }
         }
-        else if (id == R.id.signOutButton) {
+        /*else if (id == R.id.signOutButton) {
             signOut();
-        }
+        }*/
     }
 }
