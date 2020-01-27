@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">TrabalhoPraticoCMU</string>
+
+    <!-- Firebase Authentication strings -->
+    <string name="auth_image_description">App Icon</string>
+    <string name="auth_title_text">YourAssistant Authentication Page</string>
+
+    <string name="sign_in">Sign In</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="create_account">Create Account</string>
+
+    <string name="email_hint">email</string>
+    <string name="password_hint">password</string>
+    <string name="create_email_hint">new user email</string>
+    <string name="create_password_hint">new user password</string>
+
+    <string name="signed_in">Signed In - User: %s</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="creating_account">Creating New Account With Email and Password</string>
+    <string name="create_successful">New Account Created with Email: %s</string>
+    <string name="create_failed">Failed to Create a New Account!</string>
+    <!-- End -->
+
 </resources>
