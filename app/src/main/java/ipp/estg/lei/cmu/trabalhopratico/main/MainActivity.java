@@ -1,8 +1,8 @@
-package ipp.estg.lei.cmu.trabalhopratico;
+package ipp.estg.lei.cmu.trabalhopratico.main;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import ipp.estg.lei.cmu.trabalhopratico.R;
 
 public class MainActivity extends AppCompatActivity {
 
