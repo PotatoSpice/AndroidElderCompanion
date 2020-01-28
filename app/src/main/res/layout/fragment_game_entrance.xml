@@ -15,7 +15,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="185dp" />
+        android:layout_height="72dp" />
 
     <Button
         android:id="@+id/startGameButton"
@@ -27,8 +27,16 @@
     <EditText
         android:id="@+id/gameTipsTxt"
         android:layout_width="match_parent"
-        android:layout_height="342dp"
+        android:layout_height="wrap_content"
+        android:editable="false"
         android:hint="@string/gameInformationText"
-        android:textSize="30sp" />
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/bestScoreTXT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Melhor Pontuação:"
+        android:textSize="36sp" />
 
 </LinearLayout>

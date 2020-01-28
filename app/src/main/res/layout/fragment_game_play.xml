@@ -6,7 +6,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="142dp" />
+        android:layout_height="99dp" />
 
     <TextView
         android:id="@+id/questionTXT"
@@ -16,24 +16,23 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="64dp">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="63dp">
+            android:layout_height="39dp">
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <TextView
+                    android:id="@+id/equalsTXT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="="
+                    android:textSize="24sp" />
             </TableRow>
-
-            <TextView
-                android:id="@+id/equalsTXT"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="="
-                android:textSize="24sp" />
 
             <TableRow
                 android:layout_width="match_parent"
@@ -44,7 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
+                    android:inputType="numberSigned"
                     android:textSize="24sp" />
             </TableRow>
 
@@ -61,7 +60,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="70dp" />
+        android:layout_height="17dp" />
 
     <TextView
         android:id="@+id/counterTXT"
@@ -72,12 +71,20 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="54dp" />
+        android:layout_height="19dp" />
 
     <EditText
         android:id="@+id/gameTipsTxt"
         android:layout_width="match_parent"
-        android:layout_height="316dp"
+        android:layout_height="68dp"
+        android:editable="false"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/tipButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Precisa de Ajuda?"
         android:textSize="24sp" />
 
 </LinearLayout>

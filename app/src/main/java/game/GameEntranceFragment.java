@@ -9,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import game.classificacoes.database.ClassiDatabase;
+import game.classificacoes.models.Classificacao;
 import ipp.estg.lei.cmu.trabalhopratico.R;
 
 public class GameEntranceFragment extends Fragment {
@@ -17,6 +20,10 @@ public class GameEntranceFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private Button entryButton;
+    private TextView scoreTXT;
+    private Classificacao bestScore;
+    ClassiDatabase classiDb;
+    int entryNumber=0;
 
     public GameEntranceFragment() {
         // Required empty public constructor
@@ -33,6 +40,9 @@ public class GameEntranceFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View mViewContent = inflater.inflate(R.layout.fragment_game_entrance, container, false);
+        scoreTXT = mViewContent.findViewById(R.id.bestScoreTXT);
+        classiDb = ClassiDatabase.getDatabase(getActivity().getApplicationContext());
+        setBestScore();
         entryButton = mViewContent.findViewById(R.id.startGameButton);
         entryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,11 +55,27 @@ public class GameEntranceFragment extends Fragment {
         return mViewContent;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed() {
         if (mListener != null) {
             mListener.startGame();
         }
+    }
+
+    public void setBestScore(){
+        ClassiDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                entryNumber = classiDb.getClassiDao().getCount();
+                bestScore = classiDb.getClassiDao().loadTopClassificacao();
+            }
+        });
+
+        if(entryNumber!=0) {
+            scoreTXT.setText("Melhor pontuação: " + bestScore.points);
+        }else{
+            scoreTXT.setText("Sem Melhor pontuação");
+        }
+
     }
 
     @Override
