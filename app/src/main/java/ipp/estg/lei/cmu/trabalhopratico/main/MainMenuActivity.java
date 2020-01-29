@@ -18,6 +18,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import ipp.estg.lei.cmu.trabalhopratico.LoginActivity;
 import ipp.estg.lei.cmu.trabalhopratico.R;
+import ipp.estg.lei.cmu.trabalhopratico.medicacao.dialogs.AddMedicationDialog;
+import ipp.estg.lei.cmu.trabalhopratico.medicacao.models.MedicationModel;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -35,7 +37,7 @@ public class MainMenuActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                R.id.navigation_home)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -75,5 +77,4 @@ public class MainMenuActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
 }

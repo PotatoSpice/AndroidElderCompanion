@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import ipp.estg.lei.cmu.trabalhopratico.R;
+import ipp.estg.lei.cmu.trabalhopratico.medicacao.dialogs.AddMedicationDialog;
 
 public class HomeFragment extends Fragment {
 
@@ -26,6 +28,8 @@ public class HomeFragment extends Fragment {
 
                 // DIALOG PARA ADICIONAR UM REGISTO DE MEDICAÇÃO
                 // MedicationListContent.addItem(new MedicationModel("", "", 0, null));
+                DialogFragment dialog = new AddMedicationDialog();
+                dialog.show(getActivity().getSupportFragmentManager(), "add_medication_dialog");
 
                 Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();

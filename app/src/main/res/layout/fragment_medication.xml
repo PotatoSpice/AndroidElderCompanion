@@ -9,7 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/card_margin"
+        android:layout_marginRight="@dimen/card_margin_sides"
+        android:layout_marginLeft="@dimen/card_margin_sides"
+        android:layout_marginTop="@dimen/card_margin_topbottom"
+        android:layout_marginBottom="@dimen/card_margin_topbottom"
         android:elevation="3dp"
         card_view:cardCornerRadius="@dimen/card_medication_radius">
 
@@ -21,7 +24,7 @@
                 android:id="@+id/meditem_detalhestoma"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPrimaryDark"
                 android:padding="@dimen/text_margin"
                 android:orientation="vertical">
 
@@ -41,6 +44,13 @@
 
                 <TextView
                     android:id="@+id/meditem_periodoToma"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/meditem_light"
+                    android:textSize="@dimen/medication_title" />
+
+                <TextView
+                    android:id="@+id/meditem_horaInicio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/meditem_light"
@@ -80,15 +90,16 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/overflow"
+                android:id="@+id/meditem_menu"
                 android:layout_width="@dimen/ic_album_overflow_width"
                 android:layout_height="@dimen/ic_album_overflow_height"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/meditem_detalhestoma"
                 android:layout_marginTop="@dimen/ic_album_overflow_margin_top"
                 android:layout_marginEnd="@dimen/ic_album_overflow_margin_right"
+                android:layout_marginBottom="@dimen/ic_album_overflow_margin_right"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_item_menu_black_24dp" />
+                android:src="@drawable/ic_delete_forever_black_24dp" />
 
             <!-- android:textAppearance="?attr/textAppearanceListItem" -->
 
