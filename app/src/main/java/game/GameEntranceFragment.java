@@ -1,6 +1,7 @@
 package game;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -42,7 +43,8 @@ public class GameEntranceFragment extends Fragment {
         View mViewContent = inflater.inflate(R.layout.fragment_game_entrance, container, false);
         scoreTXT = mViewContent.findViewById(R.id.bestScoreTXT);
         classiDb = ClassiDatabase.getDatabase(getActivity().getApplicationContext());
-        setBestScore();
+        DataAsyncTask dataAsyncTask = new DataAsyncTask();
+        dataAsyncTask.execute();
         entryButton = mViewContent.findViewById(R.id.startGameButton);
         entryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +75,7 @@ public class GameEntranceFragment extends Fragment {
         if(entryNumber!=0) {
             scoreTXT.setText("Melhor pontuação: " + bestScore.points);
         }else{
-            scoreTXT.setText("Sem Melhor pontuação");
+            scoreTXT.setText("Sem Melhor pontuação; DEB:" + entryNumber );
         }
 
     }
@@ -108,4 +110,20 @@ public class GameEntranceFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         void startGame();
     }
+
+    private class DataAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void ... urls) {
+            ClassiDatabase.databaseWriteExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                   setBestScore();
+                }
+            });
+
+            return null;
+        }
+    }
+
 }

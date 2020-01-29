@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import java.util.TimerTask;
 
 import game.classificacoes.database.ClassiDatabase;
 import game.classificacoes.models.Classificacao;
+import game.classificacoes.models.ClassificacaoDAO;
 import ipp.estg.lei.cmu.trabalhopratico.R;
 
 
@@ -108,7 +110,10 @@ public class GamePlayFragment extends Fragment {
                         alertDialog.setMessage("Terminou o jogo, respondendo às 12 questões corretamente! Pontuação alcançada: " + calculateScore());
                         alertDialog.setButton("Voltar ao ínicio", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                recordClassification(calculateScore());
+                               // recordClassification(calculateScore());
+                                DataAsyncTask dataAsyncTask = new DataAsyncTask(classiDb);
+                                Classificacao classificacao = new Classificacao("user", calculateScore());
+                                dataAsyncTask.execute(classificacao);
                                 FragmentManager fm = getFragmentManager();
                                 if (fm.getBackStackEntryCount() > 0) {
                                     fm.popBackStack();
@@ -145,8 +150,8 @@ public class GamePlayFragment extends Fragment {
             } else if (random == 1) {
                 operator = "-";
             }
-            return (int) (Math.floor(Math.random() * 15)) + " " + operator + " " +
-                    (int) (Math.floor(Math.random() * 15)) + " = x";
+            return (int) (Math.floor(Math.random() * 16)) + " " + operator + " " +
+                    (int) (Math.floor(Math.random() * 16)) + " = x";
         }else if(counter<6){
             String operator = "*";
             int random = (int) Math.floor((Math.random() * 2));
@@ -156,12 +161,12 @@ public class GamePlayFragment extends Fragment {
                 operator = "/";
             }
             int n1, n2;
-            n1 = (int) (Math.floor(Math.random() * 10));
-            n2 = (int) (Math.floor(Math.random() * 10));
+            n1 = (int) (Math.floor(Math.random() * 11));
+            n2 = (int) (Math.floor(Math.random() * 11));
             if(operator.equals("/"))
                 while(n2==0 || n1%n2!=0){
-                    n1 = (int) (Math.floor(Math.random() * 10));
-                    n2 = (int) (Math.floor(Math.random() * 10));
+                    n1 = (int) (Math.floor(Math.random() * 11));
+                    n2 = (int) (Math.floor(Math.random() * 11));
                 }
             return n1 + " " + operator + " " +
                     n2 + " = x";
@@ -178,13 +183,18 @@ public class GamePlayFragment extends Fragment {
                 operator = "/";
             }
             int n1, n2=0;
-            n1 = (int) (Math.floor(Math.random() * 15));
-            while(n2==0)
-                n2 = (int) (Math.floor(Math.random() * 15));
-            if(operator.equals("/"))
-                while(n1%n2!=0){
-                    n2 = (int) (Math.floor(Math.random() * 15));
+            n1 = (int) (Math.floor(Math.random() * 16));
+
+            if(operator.equals("/")) {
+                while (n2 == 0) {
+                    n2 = (int) (Math.floor(Math.random() * 16));
+                    if(n2!=0) {
+                        while (n1 % n2 != 0) {
+                            n2 = (int) (Math.floor(Math.random() * 16));
+                        }
+                    }
                 }
+            }
             return  n1+ " " + operator + " " +
                      n2+ " = x";
         }
@@ -220,9 +230,9 @@ public class GamePlayFragment extends Fragment {
     }
 
     private int calculateScore(){
-       int total = 120;
+        int total = 120;
+        int lostPoints;
         for(int ix=0; ix<12; ix++){
-            int lostPoints;
             if(attempts[ix]>9)
                 lostPoints=9;
             else
@@ -258,12 +268,33 @@ public class GamePlayFragment extends Fragment {
 
     private void recordClassification(int points){
         final Classificacao classificacao = new Classificacao("user", points); //user dummy
-        ClassiDatabase.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                classiDb.getClassiDao().insertClassificacao(classificacao);
-            }
-        });
+
+    }
+
+    private class DataAsyncTask extends AsyncTask<Classificacao, Void, Void>{
+
+        ClassiDatabase classiDatabase;
+        /*ClassificacaoDAO classificacaoDAO;
+
+        public void setDAO(ClassificacaoDAO classificacaoDAO){
+            this.classificacaoDAO=classificacaoDAO;
+        } */
+
+        public DataAsyncTask (ClassiDatabase classiDatabase){
+            this.classiDatabase=classiDatabase;
+        }
+
+        @Override
+        protected Void doInBackground(final Classificacao... classificacaos) {
+            ClassiDatabase.databaseWriteExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    classiDatabase.getClassiDao().insertClassificacao(classificacaos);
+                }
+            });
+
+            return null;
+        }
     }
 
 }

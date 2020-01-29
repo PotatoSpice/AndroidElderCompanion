@@ -25,7 +25,7 @@ public abstract class ClassiDatabase extends RoomDatabase {
             synchronized (ClassiDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            ClassiDatabase.class, "notes_database")
+                            ClassiDatabase.class, "class_database")
                             .build();
                 }
             }

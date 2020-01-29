@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/questionTXT"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:textSize="24sp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="39dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/equalsTXT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="="
+                    android:textSize="24sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/replyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="numberSigned"
+                    android:textSize="24sp" />
+            </TableRow>
+
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/checkButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Validar Resposta"
+        android:textSize="24sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="17dp" />
+
+    <TextView
+        android:id="@+id/counterTXT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Questões respondidas:"
+        android:textSize="24sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="19dp" />
+
+    <EditText
+        android:id="@+id/gameTipsTxt"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:editable="false"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/tipButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Precisa de Ajuda?"
+        android:textSize="24sp" />
+
+</LinearLayout>
