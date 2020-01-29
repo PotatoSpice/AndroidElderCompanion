@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import java.util.Calendar;
@@ -39,7 +40,6 @@ public class GameActivity extends AppCompatActivity implements GameEntranceFragm
         transaction.commit();
     }
 
-
     public void notificationAlarm() {
 
         Calendar calendar = Calendar.getInstance();
@@ -58,4 +58,6 @@ public class GameActivity extends AppCompatActivity implements GameEntranceFragm
         }
 
     }
+
+
 }

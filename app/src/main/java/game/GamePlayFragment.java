@@ -39,6 +39,7 @@ public class GamePlayFragment extends Fragment {
     private int counter = 0;
     private int[] attempts = new int[12];
     ClassiDatabase classiDb;
+    private String question;
 
 
     public GamePlayFragment() {
@@ -48,8 +49,11 @@ public class GamePlayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        question = questionGeneration();
 
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +61,7 @@ public class GamePlayFragment extends Fragment {
         // Inflate the layout for this fragment
         View mViewContent = inflater.inflate(R.layout.fragment_game_play, container, false);
         textTXT= mViewContent.findViewById(R.id.questionTXT);
-        textTXT.setText(questionGeneration());
+        textTXT.setText(question);
         userInput = mViewContent.findViewById(R.id.replyText);
         tipTXT = mViewContent.findViewById(R.id.gameTipsTxt);
         questioncTXT = mViewContent.findViewById(R.id.counterTXT);
@@ -79,51 +83,51 @@ public class GamePlayFragment extends Fragment {
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userInput.getText().toString()!=null || Integer.parseInt(userInput.getText().toString())>Integer.MAX_VALUE || Integer.parseInt(userInput.getText().toString())<Integer.MIN_VALUE) {
-                    String question = textTXT.getText().toString();
-                    String answer = userInput.getText().toString();
-                    String[] q_parts = question.substring(0, question.indexOf("=")).split(" ");
-                    int first = Integer.parseInt(q_parts[0]), second = Integer.parseInt(q_parts[2]),
-                            ans = Integer.parseInt(answer);
-                    String op = q_parts[1];
-                    if (checkResults(first, second, op, ans) && counter<12) {
-                        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create(); //Read Update
-                        alertDialog.setTitle("Correto!");
-                        alertDialog.setMessage("O Resultado está correto!");
-                        alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                textTXT.setText(questionGeneration());
-                                questioncTXT.setText(" Questões respondidas:" + counter);
-                            }
-                        });
-                        alertDialog.show();
-                    } else if(counter<12){
-                        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create(); //Read Update
-                        alertDialog.setTitle("Incorreto!");
-                        alertDialog.setMessage("O Resultado está incorreto!");
-                        alertDialog.show();  //<-- See This!
-                    }
-
-                    if (counter == 12) {
-                        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create(); //Read Update
-                        alertDialog.setTitle("Jogo terminado");
-                        alertDialog.setMessage("Terminou o jogo, respondendo às 12 questões corretamente! Pontuação alcançada: " + calculateScore());
-                        alertDialog.setButton("Voltar ao ínicio", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                               // recordClassification(calculateScore());
-                                DataAsyncTask dataAsyncTask = new DataAsyncTask(classiDb);
-                                Classificacao classificacao = new Classificacao("user", calculateScore());
-                                dataAsyncTask.execute(classificacao);
-                                FragmentManager fm = getFragmentManager();
-                                if (fm.getBackStackEntryCount() > 0) {
-                                    fm.popBackStack();
+                if (!userInput.getText().toString().equals("") && !userInput.getText().toString().equals("-")) {
+                        String question = textTXT.getText().toString();
+                        String answer = userInput.getText().toString();
+                        String[] q_parts = question.substring(0, question.indexOf("=")).split(" ");
+                        int first = Integer.parseInt(q_parts[0]), second = Integer.parseInt(q_parts[2]),
+                                ans = Integer.parseInt(answer);
+                        String op = q_parts[1];
+                        if (checkResults(first, second, op, ans) && counter < 12) {
+                            AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create(); //Read Update
+                            alertDialog.setTitle("Correto!");
+                            alertDialog.setMessage("O Resultado está correto!");
+                            alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    textTXT.setText(questionGeneration());
+                                    questioncTXT.setText(" Questões respondidas:" + counter);
                                 }
-                            }
-                        });
-                        alertDialog.show();
+                            });
+                            alertDialog.show();
+                        } else if (counter < 12) {
+                            AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create(); //Read Update
+                            alertDialog.setTitle("Incorreto!");
+                            alertDialog.setMessage("O Resultado está incorreto!");
+                            alertDialog.show();  //<-- See This!
+                        }
+
+                        if (counter == 12) {
+                            AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create(); //Read Update
+                            alertDialog.setTitle("Jogo terminado");
+                            alertDialog.setMessage("Terminou o jogo, respondendo às 12 questões corretamente! Pontuação alcançada: " + calculateScore());
+                            alertDialog.setButton("Voltar ao ínicio", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // recordClassification(calculateScore());
+                                    DataAsyncTask dataAsyncTask = new DataAsyncTask(classiDb);
+                                    Classificacao classificacao = new Classificacao("user", calculateScore());
+                                    dataAsyncTask.execute(classificacao);
+                                    FragmentManager fm = getFragmentManager();
+                                    if (fm.getBackStackEntryCount() > 0) {
+                                        fm.popBackStack();
+                                    }
+                                }
+                            });
+                            alertDialog.show();
+                        }
                     }
                 }
-            }
         });
 
         tipsButton.setOnClickListener(new View.OnClickListener() {
@@ -182,18 +186,14 @@ public class GamePlayFragment extends Fragment {
             } else if (random == 3) {
                 operator = "/";
             }
-            int n1, n2=0;
+            int n1, n2;
             n1 = (int) (Math.floor(Math.random() * 16));
-
+            n2 = (int) (Math.floor(Math.random() * 15)+1);
             if(operator.equals("/")) {
-                while (n2 == 0) {
                     n2 = (int) (Math.floor(Math.random() * 16));
-                    if(n2!=0) {
                         while (n1 % n2 != 0) {
-                            n2 = (int) (Math.floor(Math.random() * 16));
+                            n2 = (int) (Math.floor(Math.random() * 15)+1);
                         }
-                    }
-                }
             }
             return  n1+ " " + operator + " " +
                      n2+ " = x";
@@ -264,11 +264,6 @@ public class GamePlayFragment extends Fragment {
         }else{
             return "Esta é fácil, vai conseguir!";
         }
-    }
-
-    private void recordClassification(int points){
-        final Classificacao classificacao = new Classificacao("user", points); //user dummy
-
     }
 
     private class DataAsyncTask extends AsyncTask<Classificacao, Void, Void>{

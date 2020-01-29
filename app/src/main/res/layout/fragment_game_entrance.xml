@@ -39,4 +39,8 @@
         android:text="Melhor Pontuação:"
         android:textSize="36sp" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="73dp" />
+
 </LinearLayout>

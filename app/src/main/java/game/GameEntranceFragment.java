@@ -12,8 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.concurrent.ExecutionException;
+
 import game.classificacoes.database.ClassiDatabase;
 import game.classificacoes.models.Classificacao;
+import game.classificacoes.models.ClassificacaoDAO;
 import ipp.estg.lei.cmu.trabalhopratico.R;
 
 public class GameEntranceFragment extends Fragment {
@@ -22,9 +25,9 @@ public class GameEntranceFragment extends Fragment {
 
     private Button entryButton;
     private TextView scoreTXT;
-    private Classificacao bestScore;
     ClassiDatabase classiDb;
-    int entryNumber=0;
+    Classificacao[] topClassificacao = new Classificacao[1];
+
 
     public GameEntranceFragment() {
         // Required empty public constructor
@@ -33,7 +36,7 @@ public class GameEntranceFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        classiDb = ClassiDatabase.getDatabase(getActivity().getApplicationContext());
     }
 
     @Override
@@ -41,11 +44,20 @@ public class GameEntranceFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View mViewContent = inflater.inflate(R.layout.fragment_game_entrance, container, false);
+
+
+        try {
+            topClassificacao[0] = new DataAsyncTask(classiDb.getClassiDao()).execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         scoreTXT = mViewContent.findViewById(R.id.bestScoreTXT);
-        classiDb = ClassiDatabase.getDatabase(getActivity().getApplicationContext());
-        DataAsyncTask dataAsyncTask = new DataAsyncTask();
-        dataAsyncTask.execute();
         entryButton = mViewContent.findViewById(R.id.startGameButton);
+        if(topClassificacao[0]!=null){
+            scoreTXT.setText("Melhor pontuação: "+topClassificacao[0].points);
+        }
         entryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,22 +75,6 @@ public class GameEntranceFragment extends Fragment {
         }
     }
 
-    public void setBestScore(){
-        ClassiDatabase.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                entryNumber = classiDb.getClassiDao().getCount();
-                bestScore = classiDb.getClassiDao().loadTopClassificacao();
-            }
-        });
-
-        if(entryNumber!=0) {
-            scoreTXT.setText("Melhor pontuação: " + bestScore.points);
-        }else{
-            scoreTXT.setText("Sem Melhor pontuação; DEB:" + entryNumber );
-        }
-
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -111,18 +107,19 @@ public class GameEntranceFragment extends Fragment {
         void startGame();
     }
 
-    private class DataAsyncTask extends AsyncTask<Void, Void, Void> {
+    private class DataAsyncTask extends AsyncTask<Void, Void, Classificacao> {
+
+        ClassificacaoDAO dao;
+
+        public DataAsyncTask(ClassificacaoDAO dao){
+            this.dao=dao;
+        }
 
         @Override
-        protected Void doInBackground(Void ... urls) {
-            ClassiDatabase.databaseWriteExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                   setBestScore();
-                }
-            });
-
-            return null;
+        protected Classificacao doInBackground(Void ... urls) {
+            final Classificacao[] bestScore = new Classificacao[1];
+            bestScore[0] = dao.loadTopClassificacao();
+            return bestScore[0];
         }
     }
 
