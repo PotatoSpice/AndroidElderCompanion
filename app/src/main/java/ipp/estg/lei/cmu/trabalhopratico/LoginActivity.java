@@ -2,14 +2,18 @@ package ipp.estg.lei.cmu.trabalhopratico;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,6 +42,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Toolbar toolbar = findViewById(R.id.login_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("YourAssistant");
 
         statusView = findViewById(R.id.status);
         detailsView = findViewById(R.id.details);
@@ -94,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // If sign in fails, display a message to the user
                             Exception exc = task.getException();
                             Log.w(TAG, "signInWithEmail:failure", exc);
-                            detailsView.setText((exc != null ? exc.getMessage() : null));
+                            detailsView.setText((exc != null ? exc.getLocalizedMessage() : null));
                             updateUI(null);
                         }
 
@@ -125,7 +133,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // If sign in fails, display a message to the user
                             Exception exc = task.getException();
                             Log.w(TAG, "createUserWithEmail:failure", exc);
-                            detailsView.setText((exc != null ? exc.getMessage() : null));
+                            detailsView.setText((exc != null ? exc.getLocalizedMessage() : null));
                             updateUI(null);
                         }
 
@@ -228,5 +236,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         /*else if (id == R.id.signOutButton) {
             signOut();
         }*/
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.login_bar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Toast.makeText(this, "You clicked on settings!", Toast.LENGTH_LONG);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

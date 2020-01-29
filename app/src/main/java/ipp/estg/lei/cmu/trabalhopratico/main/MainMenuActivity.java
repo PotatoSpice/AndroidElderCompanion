@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -15,6 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import ipp.estg.lei.cmu.trabalhopratico.LoginActivity;
 import ipp.estg.lei.cmu.trabalhopratico.R;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -28,7 +30,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("YourAssistant");
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -39,12 +40,15 @@ public class MainMenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+
+        // VERIFICAR E ADICIONAR O CONTACTO DE SEGURANÇA SE NAO EXISTIR (DIALOG)
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main_bar_menu, menu);
         return true;
     }
 
@@ -52,7 +56,13 @@ public class MainMenuActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-
+                Toast.makeText(this, "You clicked on settings!", Toast.LENGTH_LONG);
+                return true;
+            case R.id.action_signout:
+                Intent logoutIntent = new Intent(this, LoginActivity.class);
+                logoutIntent.setAction("ipp.estg.lei.cmu.trabalhopratico.SIGN_OUT_USER");
+                startActivity(logoutIntent);
+                finish(); // remover esta activity da stack para prevenir que o user volte para trás
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
