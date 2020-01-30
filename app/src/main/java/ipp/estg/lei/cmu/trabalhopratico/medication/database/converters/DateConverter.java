@@ -1,11 +1,8 @@
-package ipp.estg.lei.cmu.trabalhopratico.medicacao.database.converters;
-
-import android.util.Log;
+package ipp.estg.lei.cmu.trabalhopratico.medication.database.converters;
 
 import androidx.room.TypeConverter;
 
 import java.sql.Date;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 

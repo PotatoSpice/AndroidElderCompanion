@@ -1,15 +1,13 @@
-package ipp.estg.lei.cmu.trabalhopratico.medicacao.database;
+package ipp.estg.lei.cmu.trabalhopratico.medication.database;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.Iterator;
 import java.util.List;
 
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.models.MedicationDao;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.models.MedicationModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationDao;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
 
 public class MedicationRepository {
 
@@ -54,12 +52,10 @@ public class MedicationRepository {
 
     public void deleteMedicationItemById(int id) {
         final int temp = id;
-        Log.d("ASDJSHADKSAHDAS", "MANEL A REMOVER O ITEM COM ID: " + id);
         MedicationDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 mMedicationDao.deleteItemById(temp);
-                Log.d("ASDJSHADKSAHDAS", "MANEL REMOVEU O ITEM COM ID: " + temp);
             }
         });
         List<MedicationModel> tempList = medicationList.getValue();
@@ -67,7 +63,23 @@ public class MedicationRepository {
         for (int i = 0; i < tempList.size(); i++) {
             if (tempList.get(i).id == id) model = tempList.get(i);
         }
-        Log.d("ASDJSHADKSAHDAS", "MANEL A REMOVER O ITEM: " + model.toString());
+        tempList.remove(model);
+        medicationList.setValue(tempList);
+    }
+
+    public void deleteAllMedicationByName(String name) {
+        final String temp = name;
+        MedicationDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mMedicationDao.deleteAllItemsByName(temp);
+            }
+        });
+        List<MedicationModel> tempList = medicationList.getValue();
+        MedicationModel model = null;
+        for (int i = 0; i < tempList.size(); i++) {
+            if (tempList.get(i).medicamento.equals(name)) model = tempList.get(i);
+        }
         tempList.remove(model);
         medicationList.setValue(tempList);
     }

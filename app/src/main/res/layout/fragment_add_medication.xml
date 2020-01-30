@@ -10,8 +10,6 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/addmed_text_size"
         android:layout_marginTop="@dimen/addmed_textview_margin_top"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/meditem_light"
         android:text="@string/addmed_titulo" />
 
     <EditText
@@ -26,8 +24,6 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/addmed_text_size"
         android:layout_marginTop="@dimen/addmed_textview_margin_top"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/meditem_light"
         android:text="@string/addmed_medicamento" />
 
     <EditText
@@ -42,8 +38,6 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/addmed_text_size"
         android:layout_marginTop="@dimen/addmed_textview_margin_top"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/meditem_light"
         android:text="@string/addmed_quantidade" />
 
     <EditText
@@ -58,8 +52,6 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/addmed_text_size"
         android:layout_marginTop="@dimen/addmed_textview_margin_top"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/meditem_light"
         android:text="@string/addmed_horaInicio" />
 
     <EditText
@@ -74,8 +66,6 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/addmed_text_size"
         android:layout_marginTop="@dimen/addmed_textview_margin_top"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/meditem_light"
         android:text="@string/addmed_numeroTomas" />
 
     <EditText
@@ -90,8 +80,6 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/addmed_text_size"
         android:layout_marginTop="@dimen/addmed_textview_margin_top"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/meditem_light"
         android:text="@string/addmed_periodoDiario" />
 
     <EditText

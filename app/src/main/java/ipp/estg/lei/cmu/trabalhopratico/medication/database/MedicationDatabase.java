@@ -1,17 +1,16 @@
-package ipp.estg.lei.cmu.trabalhopratico.medicacao.database;
+package ipp.estg.lei.cmu.trabalhopratico.medication.database;
 
 import android.content.Context;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.models.MedicationDao;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.models.MedicationModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationDao;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
 
 @Database(entities = {MedicationModel.class}, version = 1, exportSchema = false)
 public abstract class MedicationDatabase extends RoomDatabase {

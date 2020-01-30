@@ -1,4 +1,4 @@
-package ipp.estg.lei.cmu.trabalhopratico.medicacao.models;
+package ipp.estg.lei.cmu.trabalhopratico.medication.models;
 
 
 import androidx.room.Entity;
@@ -7,7 +7,7 @@ import androidx.room.TypeConverters;
 
 import java.sql.Date;
 
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.database.converters.DateConverter;
+import ipp.estg.lei.cmu.trabalhopratico.medication.database.converters.DateConverter;
 
 @Entity(tableName = "Medication")
 public class MedicationModel {

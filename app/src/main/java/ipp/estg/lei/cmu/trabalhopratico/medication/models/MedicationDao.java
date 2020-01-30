@@ -1,6 +1,5 @@
-package ipp.estg.lei.cmu.trabalhopratico.medicacao.models;
+package ipp.estg.lei.cmu.trabalhopratico.medication.models;
 
-import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -19,6 +18,9 @@ public interface MedicationDao {
 
     @Query("DELETE FROM Medication WHERE id = :id")
     void deleteItemById(int id);
+
+    @Query("DELETE FROM Medication WHERE medicamento = :name")
+    void deleteAllItemsByName(String name);
 
     @Query("SELECT * FROM Medication")
     List<MedicationModel> loadAllItems();

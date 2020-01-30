@@ -1,14 +1,11 @@
-package ipp.estg.lei.cmu.trabalhopratico.medicacao.adapters;
+package ipp.estg.lei.cmu.trabalhopratico.medication.adapters;
 
-import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,9 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ipp.estg.lei.cmu.trabalhopratico.R;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.database.MedicationDatabase;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.models.MedicationModel;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.viewmodels.MedicationViewModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.database.MedicationDatabase;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodels.MedicationViewModel;
 
 import java.util.List;
 
@@ -37,7 +34,7 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
     @Override
     public MedicationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_medication, parent, false);
+                .inflate(R.layout.fragment_medication_item, parent, false);
         return new MedicationViewHolder(view);
     }
 
@@ -48,9 +45,15 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
         holder.mTitulo.setText(med.titulo);
         holder.mNome.setText(med.medicamento);
         holder.mQuantidade.setText(mContext.getString(R.string.medication_quantity, med.quantidadeAtualStock));
+        if (med.numeroTomasDiarias == 1) {
+            holder.mNumeroTomasDiarias.setText(R.string.medication_dailytakes_one);
+            holder.mPeriodoTomaDiaria.setVisibility(View.GONE);
+        } else {
+            holder.mNumeroTomasDiarias.setText(mContext.getString(R.string.medication_dailytakes, med.numeroTomasDiarias));
+            holder.mPeriodoTomaDiaria.setVisibility(View.VISIBLE);
+            holder.mPeriodoTomaDiaria.setText(mContext.getString(R.string.medication_dailyperiod, med.periodoTomaDiaria));
+        }
         holder.mDataToma.setText(mContext.getString(R.string.medication_enddate, med.dataToma.toString()));
-        holder.mNumeroTomasDiarias.setText(mContext.getString(R.string.medication_dailytakes, med.numeroTomasDiarias));
-        holder.mPeriodoTomaDiaria.setText(mContext.getString(R.string.medication_dailyperiod, med.periodoTomaDiaria));
         holder.mHoraInicioTomaDiaria.setText(mContext.getString(R.string.medication_dailystart, med.horaInicioTomaDiaria));
 
         final MedicationModel temp = med;

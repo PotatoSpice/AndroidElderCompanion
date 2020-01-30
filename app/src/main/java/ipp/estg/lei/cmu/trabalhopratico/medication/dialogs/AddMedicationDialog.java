@@ -1,8 +1,7 @@
-package ipp.estg.lei.cmu.trabalhopratico.medicacao.dialogs;
+package ipp.estg.lei.cmu.trabalhopratico.medication.dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
@@ -24,9 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import ipp.estg.lei.cmu.trabalhopratico.R;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.database.MedicationDatabase;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.models.MedicationModel;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.viewmodels.MedicationViewModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodels.MedicationViewModel;
 
 public class AddMedicationDialog extends DialogFragment {
 

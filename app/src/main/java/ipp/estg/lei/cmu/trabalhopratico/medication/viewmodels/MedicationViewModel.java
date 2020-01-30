@@ -1,4 +1,4 @@
-package ipp.estg.lei.cmu.trabalhopratico.medicacao.viewmodels;
+package ipp.estg.lei.cmu.trabalhopratico.medication.viewmodels;
 
 import android.app.Application;
 
@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.database.MedicationRepository;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.models.MedicationModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.database.MedicationRepository;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
 
 public class MedicationViewModel extends AndroidViewModel {
 
