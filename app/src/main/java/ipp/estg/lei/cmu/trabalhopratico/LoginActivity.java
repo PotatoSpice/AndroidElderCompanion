@@ -2,19 +2,26 @@ package ipp.estg.lei.cmu.trabalhopratico;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import ipp.estg.lei.cmu.trabalhopratico.main.MainMenuActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -36,6 +43,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Toolbar toolbar = findViewById(R.id.login_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("YourAssistant");
+
         statusView = findViewById(R.id.status);
         detailsView = findViewById(R.id.details);
         mProgressBar = findViewById(R.id.authenticationProgress);
@@ -54,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         findViewById(R.id.signInButton).setOnClickListener(this);
         findViewById(R.id.createAccountButton).setOnClickListener(this);
-        findViewById(R.id.signOutButton).setOnClickListener(this); // para testes
+        // findViewById(R.id.signOutButton).setOnClickListener(this); // para testes
     }
 
     @Override
@@ -91,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // If sign in fails, display a message to the user
                             Exception exc = task.getException();
                             Log.w(TAG, "signInWithEmail:failure", exc);
-                            detailsView.setText((exc != null ? exc.getMessage() : null));
+                            detailsView.setText((exc != null ? exc.getLocalizedMessage() : null));
                             updateUI(null);
                         }
 
@@ -122,7 +133,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // If sign in fails, display a message to the user
                             Exception exc = task.getException();
                             Log.w(TAG, "createUserWithEmail:failure", exc);
-                            detailsView.setText((exc != null ? exc.getMessage() : null));
+                            detailsView.setText((exc != null ? exc.getLocalizedMessage() : null));
                             updateUI(null);
                         }
 
@@ -168,11 +179,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 findViewById(R.id.emailPasswordButtons).setVisibility(View.GONE);
                 findViewById(R.id.emailPasswordFields).setVisibility(View.GONE);
-                findViewById(R.id.signOutButton).setVisibility(View.VISIBLE);
+                // findViewById(R.id.signOutButton).setVisibility(View.VISIBLE); // para testes
 
                 // IR PARA A ACTIVITY COM O MENU PRINCIPAL DA APP
-                // startActivity(new Intent(this, MainMenuActivity.class));
-                // finish(); // remover esta activity da stack para prevenir que o user volte para trás
+                startActivity(new Intent(this, MainMenuActivity.class));
+                finish(); // remover esta activity da stack para prevenir que o user volte para trás
             }
 
         } else {
@@ -189,7 +200,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 findViewById(R.id.emailPasswordButtons).setVisibility(View.VISIBLE);
                 findViewById(R.id.emailPasswordFields).setVisibility(View.VISIBLE);
-                findViewById(R.id.signOutButton).setVisibility(View.GONE);
+                // findViewById(R.id.signOutButton).setVisibility(View.GONE); // para testes
             }
         }
         userEmail.setText(null);
@@ -222,8 +233,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 isCreatingAccount = false;
             }
         }
-        else if (id == R.id.signOutButton) {
+        /*else if (id == R.id.signOutButton) {
             signOut();
+        }*/
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.login_bar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Toast.makeText(this, "You clicked on settings!", Toast.LENGTH_LONG);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
