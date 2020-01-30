@@ -7,19 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="ipp.estg.lei.cmu.trabalhopratico.main.menu_tabs.home.HomeFragment"
+        android:name="ipp.estg.lei.cmu.trabalhopratico.medication.MedicationListFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_medication_list" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="ipp.estg.lei.cmu.trabalhopratico.main.menu_tabs.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_farmacy"
+        android:name="ipp.estg.lei.cmu.trabalhopratico.main.menu_tabs.games.GamesFragment"
+        android:label="@string/title_farmacy"
+        tools:layout="@layout/fragment_game_list" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="ipp.estg.lei.cmu.trabalhopratico.main.menu_tabs.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_nutrition"
+        android:name="ipp.estg.lei.cmu.trabalhopratico.main.menu_tabs.games.GamesFragment"
+        android:label="@string/title_nutrition"
+        tools:layout="@layout/fragment_game_list" />
+
+    <fragment
+        android:id="@+id/navigation_games"
+        android:name="ipp.estg.lei.cmu.trabalhopratico.main.menu_tabs.games.GamesFragment"
+        android:label="@string/title_games"
+        tools:layout="@layout/fragment_game_list" />
 </navigation>

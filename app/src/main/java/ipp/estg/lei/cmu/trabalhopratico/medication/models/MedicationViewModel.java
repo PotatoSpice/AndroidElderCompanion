@@ -1,4 +1,4 @@
-package ipp.estg.lei.cmu.trabalhopratico.medicacao.models;
+package ipp.estg.lei.cmu.trabalhopratico.medication.models;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

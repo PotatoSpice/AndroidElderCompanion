@@ -1,4 +1,4 @@
-package ipp.estg.lei.cmu.trabalhopratico.medicacao;
+package ipp.estg.lei.cmu.trabalhopratico.medication;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,10 +19,10 @@ import java.sql.Date;
 import java.util.List;
 
 import ipp.estg.lei.cmu.trabalhopratico.R;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.adapters.MedicationListAdapter;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.models.MedicationListContent;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.models.MedicationModel;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.models.MedicationViewModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.adapters.MedicationListAdapter;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationListContent;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationViewModel;
 
 public class MedicationListFragment extends Fragment {
 

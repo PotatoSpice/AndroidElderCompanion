@@ -28,9 +28,11 @@
     <string name="action_signout">Sign Out</string>
 
     <string name="title_activity_main_menu">MainMenuActivity</string>
+    <string name="title_medication">Registo Medicação</string>
+    <string name="title_farmacy">Lista Farmácias</string>
+    <string name="title_nutrition">Análise Nutrição</string>
+    <string name="title_games">Jogos Memória</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <!-- End -->
 
     <!-- Medication List strings -->

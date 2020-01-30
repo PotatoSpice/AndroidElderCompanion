@@ -1,4 +1,4 @@
-package ipp.estg.lei.cmu.trabalhopratico.medicacao.adapters;
+package ipp.estg.lei.cmu.trabalhopratico.medication.adapters;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ipp.estg.lei.cmu.trabalhopratico.R;
-import ipp.estg.lei.cmu.trabalhopratico.medicacao.models.MedicationModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
 
 import java.util.List;
 
