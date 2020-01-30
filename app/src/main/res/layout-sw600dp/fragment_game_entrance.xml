@@ -25,6 +25,7 @@
         android:id="@+id/startGameButton"
         android:layout_width="match_parent"
         android:layout_height="83dp"
+        android:backgroundTint="@color/colorPrimary"
         android:text="COMEÇAR O JOGO"
         android:textSize="36sp" />
 

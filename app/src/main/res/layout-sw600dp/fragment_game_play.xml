@@ -65,6 +65,7 @@
                 android:id="@+id/checkButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
                 android:text="Validar Resposta"
                 android:textSize="24sp" />
 
@@ -94,6 +95,7 @@
                 android:id="@+id/tipButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
                 android:text="Precisa de Ajuda?"
                 android:textSize="24sp" />
         </LinearLayout>
