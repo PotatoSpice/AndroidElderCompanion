@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -113,6 +115,7 @@ public class GamePlayFragment extends Fragment {
                             alertDialog.setTitle("Jogo terminado");
                             alertDialog.setMessage("Terminou o jogo, respondendo às 12 questões corretamente! Pontuação alcançada: " + calculateScore());
                             alertDialog.setButton("Voltar ao ínicio", new DialogInterface.OnClickListener() {
+                                @RequiresApi(api = Build.VERSION_CODES.O)
                                 public void onClick(DialogInterface dialog, int which) {
                                     // recordClassification(calculateScore());
                                     DataAsyncTask dataAsyncTask = new DataAsyncTask(classiDb);
@@ -282,6 +285,7 @@ public class GamePlayFragment extends Fragment {
         @Override
         protected Void doInBackground(final Classificacao... classificacaos) {
             ClassiDatabase.databaseWriteExecutor.execute(new Runnable() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void run() {
                     classiDatabase.getClassiDao().insertClassificacao(classificacaos);

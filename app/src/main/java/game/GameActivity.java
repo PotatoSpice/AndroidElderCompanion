@@ -21,7 +21,7 @@ public class GameActivity extends AppCompatActivity implements GameEntranceFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+        notificationAlarm(); //Deveria ser aqui?
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) return;
             GameEntranceFragment inpFragment = new GameEntranceFragment();

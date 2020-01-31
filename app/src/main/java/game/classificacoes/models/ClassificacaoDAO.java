@@ -24,5 +24,8 @@ public interface ClassificacaoDAO {
 
     @Query("SELECT * FROM Classificacao order by Classificacao.points desc limit 1")
     Classificacao loadTopClassificacao();
+
+    @Query("SELECT * FROM Classificacao where dataScore = :todayDate order by Classificacao.points desc limit 1")
+    Classificacao loadTopClassToday(String todayDate);
 }
 

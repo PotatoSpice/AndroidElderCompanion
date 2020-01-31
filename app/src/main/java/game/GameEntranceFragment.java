@@ -2,8 +2,10 @@ package game;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,6 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 import game.classificacoes.database.ClassiDatabase;
@@ -57,6 +64,8 @@ public class GameEntranceFragment extends Fragment {
         entryButton = mViewContent.findViewById(R.id.startGameButton);
         if(topClassificacao[0]!=null){
             scoreTXT.setText("Melhor pontuação: "+topClassificacao[0].points);
+        }else{
+            scoreTXT.setText("Ainda não jogou hoje!");
         }
         entryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,8 +126,11 @@ public class GameEntranceFragment extends Fragment {
 
         @Override
         protected Classificacao doInBackground(Void ... urls) {
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedDate = df.format(c.getTime());
             final Classificacao[] bestScore = new Classificacao[1];
-            bestScore[0] = dao.loadTopClassificacao();
+            bestScore[0] = dao.loadTopClassToday(formattedDate);
             return bestScore[0];
         }
     }
