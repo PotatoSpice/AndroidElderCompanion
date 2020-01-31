@@ -42,4 +42,6 @@
     <string name="medication_quantity">Quantidade medicação disponível: %d</string>
     <!-- End -->
 
+    <!-- SMS a enviar em caso de queda -->
+    <string name="drop_message">INFORMAMOS: O membro associado do qual é contacto de segurança teve uma queda.</string>
 </resources>
