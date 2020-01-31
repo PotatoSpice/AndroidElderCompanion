@@ -82,8 +82,8 @@ public class MedicationListFragment extends Fragment {
             // Update recycler view every time the list gets updated
             liveData.getMedicationList().observe(getViewLifecycleOwner(), new Observer<List<MedicationModel>>() {
                 @Override
-                public void onChanged(@Nullable List<MedicationModel> medicationList) {
-                    mAdapter.setMedicationItems(medicationList);
+                public void onChanged(@Nullable List<MedicationModel> medication) {
+                    mAdapter.setMedicationItems(medication);
                     mAdapter.notifyDataSetChanged();
                 }
             });

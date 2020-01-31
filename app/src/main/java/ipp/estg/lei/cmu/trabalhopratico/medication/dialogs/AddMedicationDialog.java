@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import ipp.estg.lei.cmu.trabalhopratico.R;
+import ipp.estg.lei.cmu.trabalhopratico.medication.database.MedicationDatabase;
 import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
 import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodels.MedicationViewModel;
 
@@ -54,7 +55,12 @@ public class AddMedicationDialog extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        liveData = new ViewModelProvider(getActivity()).get(MedicationViewModel.class);
+        MedicationDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                liveData = new ViewModelProvider(getActivity()).get(MedicationViewModel.class);
+            }
+        });
         pickedDate = new Date(System.currentTimeMillis());
     }
 

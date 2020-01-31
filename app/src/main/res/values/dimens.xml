@@ -42,6 +42,8 @@
     <!-- Add Medication Registry -->
     <dimen name="addmed_button_margin_top">30dp</dimen>
     <dimen name="addmed_textview_margin_top">8dp</dimen>
+    <dimen name="addmed_land_button_margin_top">15dp</dimen>
+    <dimen name="addmed_land_textview_margin_top">2dp</dimen>
     <dimen name="addmed_text_size">16sp</dimen>
     <!-- End -->
 

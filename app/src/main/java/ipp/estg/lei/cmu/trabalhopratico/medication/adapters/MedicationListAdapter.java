@@ -85,13 +85,7 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
     }
 
     public void setMedicationItems(List<MedicationModel> items) {
-        final List<MedicationModel> temp = items;
-        MedicationDatabase.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                medicationList = temp;
-            }
-        });
+        medicationList = items;
     }
 
     @Override

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="colorPrimary">#C1C7E4</color>
+    <color name="colorPrimaryDark">#4CAF50</color>
+    <color name="colorAccent">#2196F3</color>
+    <!--
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-
+    -->
     <!--
     <color name="colorPrimary">#039BE5</color>
     <color name="colorPrimaryDark">#0288D1</color>
@@ -22,5 +26,5 @@
     <color name="meditem_title">#4c4c4c</color>
     <color name="meditem_light">#FFFFFF</color>
     <color name="meditem_dark">#424242</color>
-    <color name="meditem_alarm">#E43232</color>
+    <color name="meditem_alarm">#F44336</color>
 </resources>
