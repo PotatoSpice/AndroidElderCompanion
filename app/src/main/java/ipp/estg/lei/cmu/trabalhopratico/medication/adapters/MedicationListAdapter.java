@@ -1,10 +1,12 @@
 package ipp.estg.lei.cmu.trabalhopratico.medication.adapters;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ipp.estg.lei.cmu.trabalhopratico.R;
-import ipp.estg.lei.cmu.trabalhopratico.medication.database.MedicationDatabase;
 import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
 import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodels.MedicationViewModel;
 
+import java.sql.Date;
 import java.util.List;
 
 public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAdapter.MedicationViewHolder> {
@@ -57,32 +59,45 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
         holder.mDataToma.setText(mContext.getString(R.string.medication_enddate, med.dataToma.toString()));
         holder.mHoraInicioTomaDiaria.setText(mContext.getString(R.string.medication_dailystart, med.horaInicioTomaDiaria));
 
-        final MedicationModel temp = med;
-        holder.mIconMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog dialog = new AlertDialog.Builder(mContext)
-                        .setTitle(R.string.medication_remove_title)
-                        .setMessage(R.string.medication_remove)
-                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                liveData.deleteMedicationItemById(temp.id);
-                                Toast.makeText(mContext, R.string.medication_remove_success,
-                                        Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .create();
-                dialog.show();
-            }
-        });
+        // Se ainda não tiver passado a data da toma da medicação registada (menor ou próprio dia)
+        // Senão, o registo passou a validade acionando o botão para remover.
+        if (med.dataToma.compareTo(new Date(System.currentTimeMillis())) > 0
+                || DateUtils.isToday(med.dataToma.getTime())
+                && !mContext.getSharedPreferences("conf", Context.MODE_PRIVATE).getBoolean("isDev", false)) {
+            holder.mIconDelete.setVisibility(View.GONE);
+            holder.mView.findViewById(R.id.meditem_detalhestoma)
+                    .setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
+        } else {
+            holder.mIconDelete.setVisibility(View.VISIBLE);
+            holder.mView.findViewById(R.id.meditem_detalhestoma)
+                    .setBackgroundColor(ContextCompat.getColor(mContext, R.color.meditem_alarm));
+            final MedicationModel temp = med;
+            holder.mIconDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog dialog = new AlertDialog.Builder(mContext)
+                            .setTitle(R.string.medication_remove_title)
+                            .setMessage(R.string.medication_remove)
+                            .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    liveData.deleteMedicationItemById(temp.id);
+                                    Toast.makeText(mContext, R.string.medication_remove_success,
+                                            Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .create();
+                    dialog.show();
+                }
+            });
+        }
     }
 
     public void setMedicationItems(List<MedicationModel> items) {
@@ -104,7 +119,7 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
         public final TextView mPeriodoTomaDiaria;
         public final TextView mHoraInicioTomaDiaria;
 
-        public final ImageView mIconMenu;
+        public final ImageView mIconDelete;
 
         public final View mView;
       
@@ -121,7 +136,7 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
             mPeriodoTomaDiaria = (TextView) view.findViewById(R.id.meditem_periodoToma);
             mHoraInicioTomaDiaria = view.findViewById(R.id.meditem_horaInicio);
 
-            mIconMenu = view.findViewById(R.id.meditem_menu);
+            mIconDelete = view.findViewById(R.id.meditem_menu);
         }
 
     }
