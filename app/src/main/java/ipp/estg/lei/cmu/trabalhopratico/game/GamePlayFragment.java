@@ -1,9 +1,7 @@
-package game;
+package ipp.estg.lei.cmu.trabalhopratico.game;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,12 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-import game.classificacoes.database.ClassiDatabase;
-import game.classificacoes.models.Classificacao;
-import game.classificacoes.models.ClassificacaoDAO;
+import ipp.estg.lei.cmu.trabalhopratico.game.classificacoes.database.ClassiDatabase;
+import ipp.estg.lei.cmu.trabalhopratico.game.classificacoes.models.Classificacao;
 import ipp.estg.lei.cmu.trabalhopratico.R;
 
 

@@ -1,11 +1,9 @@
-package game;
+package ipp.estg.lei.cmu.trabalhopratico.game;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,16 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
-import game.classificacoes.database.ClassiDatabase;
-import game.classificacoes.models.Classificacao;
-import game.classificacoes.models.ClassificacaoDAO;
+import ipp.estg.lei.cmu.trabalhopratico.game.classificacoes.database.ClassiDatabase;
+import ipp.estg.lei.cmu.trabalhopratico.game.classificacoes.models.Classificacao;
+import ipp.estg.lei.cmu.trabalhopratico.game.classificacoes.models.ClassificacaoDAO;
 import ipp.estg.lei.cmu.trabalhopratico.R;
 
 public class GameEntranceFragment extends Fragment {

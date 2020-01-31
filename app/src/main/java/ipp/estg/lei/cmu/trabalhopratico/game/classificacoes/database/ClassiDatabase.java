@@ -1,4 +1,4 @@
-package game.classificacoes.database;
+package ipp.estg.lei.cmu.trabalhopratico.game.classificacoes.database;
 
 import android.content.Context;
 
@@ -9,8 +9,8 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import game.classificacoes.models.Classificacao;
-import game.classificacoes.models.ClassificacaoDAO;
+import ipp.estg.lei.cmu.trabalhopratico.game.classificacoes.models.Classificacao;
+import ipp.estg.lei.cmu.trabalhopratico.game.classificacoes.models.ClassificacaoDAO;
 
 @Database(entities = {Classificacao.class}, version = 1)
 public abstract class ClassiDatabase extends RoomDatabase {

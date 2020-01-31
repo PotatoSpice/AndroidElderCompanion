@@ -1,4 +1,4 @@
-package game.notification;
+package ipp.estg.lei.cmu.trabalhopratico.game.notification;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

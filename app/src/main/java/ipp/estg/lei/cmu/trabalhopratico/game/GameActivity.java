@@ -1,4 +1,4 @@
-package game;
+package ipp.estg.lei.cmu.trabalhopratico.game;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -6,14 +6,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import ipp.estg.lei.cmu.trabalhopratico.R;
-import game.notification.NotifcationBroadcastReceiver;
+import ipp.estg.lei.cmu.trabalhopratico.game.notification.NotifcationBroadcastReceiver;
 
 public class GameActivity extends AppCompatActivity implements GameEntranceFragment.OnFragmentInteractionListener {
 

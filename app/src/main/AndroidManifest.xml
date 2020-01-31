@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name="game.GameActivity"
+        <activity android:name=".game.GameActivity"
             android:screenOrientation="portrait">
         </activity>
 

@@ -1,4 +1,4 @@
-package game.classificacoes.models;
+package ipp.estg.lei.cmu.trabalhopratico.game.classificacoes.models;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
