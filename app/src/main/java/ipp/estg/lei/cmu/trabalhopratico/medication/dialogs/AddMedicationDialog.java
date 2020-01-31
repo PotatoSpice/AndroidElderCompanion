@@ -194,4 +194,5 @@ public class AddMedicationDialog extends DialogFragment {
 
         return valid;
     }
+
 }

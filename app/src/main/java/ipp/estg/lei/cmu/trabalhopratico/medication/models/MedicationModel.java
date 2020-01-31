@@ -1,6 +1,5 @@
 package ipp.estg.lei.cmu.trabalhopratico.medication.models;
 
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;

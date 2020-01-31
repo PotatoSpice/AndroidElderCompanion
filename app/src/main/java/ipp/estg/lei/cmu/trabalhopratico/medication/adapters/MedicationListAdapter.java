@@ -35,6 +35,7 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
     public MedicationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_medication_item, parent, false);
+
         return new MedicationViewHolder(view);
     }
 
@@ -94,7 +95,7 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
     }
 
     public class MedicationViewHolder extends RecyclerView.ViewHolder {
-
+      
         public final TextView mTitulo;
         public final TextView mNome;
         public final TextView mQuantidade;
@@ -106,6 +107,7 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
         public final ImageView mIconMenu;
 
         public final View mView;
+      
         public MedicationModel mItem;
 
         public MedicationViewHolder(View view) {

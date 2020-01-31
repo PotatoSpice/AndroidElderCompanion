@@ -32,7 +32,6 @@ public class MedicationListFragment extends Fragment {
 
     private MedicationListAdapter mAdapter;
     private List<MedicationModel> medicationList;
-
     private MedicationViewModel liveData;
 
     /**
