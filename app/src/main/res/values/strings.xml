@@ -58,4 +58,9 @@
     <string name="addmed_definirData">Definir Data Final</string>
     <!-- End -->
 
+    <!-- Farmacy List Map strings -->
+    <string name="farmacylist_load_text">Econtrando Farmácias Perto de Si</string>
+    <string name="farmacylist_load_failure_text">Não foi possível encontrar quaisquer Farmácias</string>
+    <string name="farmacylist_load_retry_button">Tentar Novamente</string>
+    <!-- End -->
 </resources>

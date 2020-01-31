@@ -47,4 +47,9 @@
     <dimen name="addmed_text_size">16sp</dimen>
     <!-- End -->
 
+    <!-- Farmacy List Map -->
+    <dimen name="farmacy_load_text_size">16sp</dimen>
+    <dimen name="farmacy_text_margin_top">30dp</dimen>
+    <!-- End -->
+
 </resources>

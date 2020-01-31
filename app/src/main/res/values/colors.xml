@@ -27,4 +27,6 @@
     <color name="meditem_light">#FFFFFF</color>
     <color name="meditem_dark">#424242</color>
     <color name="meditem_alarm">#F44336</color>
+
+    <color name="map_load_text">#4c4c4c</color>
 </resources>
