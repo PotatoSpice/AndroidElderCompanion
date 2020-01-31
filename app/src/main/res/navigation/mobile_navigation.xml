@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_farmacy"
-        android:name="ipp.estg.lei.cmu.trabalhopratico.main.menu_tabs.games.GamesFragment"
+        android:name="ipp.estg.lei.cmu.trabalhopratico.pharmacy.PharmacyListMapFragment"
         android:label="@string/title_farmacy"
-        tools:layout="@layout/fragment_game_list" />
+        tools:layout="@layout/fragment_pharmacy_list_map" />
 
     <fragment
         android:id="@+id/navigation_nutrition"

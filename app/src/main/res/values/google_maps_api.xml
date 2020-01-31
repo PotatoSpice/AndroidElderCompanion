@@ -18,6 +18,8 @@
 
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
+
+    Chave PDF Teoricos: AIzaSyA7mUE_huL6FZ4dB71Nv99FKBz2dayECkE
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyA7mUE_huL6FZ4dB71Nv99FKBz2dayECkE</string>
 </resources>

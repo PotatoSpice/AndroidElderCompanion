@@ -19,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import ipp.estg.lei.cmu.trabalhopratico.R;
 import ipp.estg.lei.cmu.trabalhopratico.medication.adapters.MedicationListAdapter;
@@ -29,9 +30,7 @@ import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodels.MedicationViewMode
 
 public class MedicationListFragment extends Fragment {
 
-    private View view;
     private MedicationListAdapter mAdapter;
-    private RecyclerView recyclerView;
     private List<MedicationModel> medicationList;
 
     private MedicationViewModel liveData;
@@ -52,7 +51,8 @@ public class MedicationListFragment extends Fragment {
             public void run() {
                 // https://stackoverflow.com/questions/53903762/viewmodelproviders-is-deprecated-in-1-1-0
                 // instância da liveData relativa ao ViewModel com a lista de Medicação Registada
-                liveData = new ViewModelProvider(getActivity()).get(MedicationViewModel.class);
+                liveData = new ViewModelProvider(Objects.requireNonNull(getActivity()))
+                        .get(MedicationViewModel.class);
             }
         });
 
@@ -67,13 +67,13 @@ public class MedicationListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_medication_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_medication_list, container, false);
 
         // Set the adapter
         if (view.findViewById(R.id.list) instanceof RecyclerView) {
             final Context context = view.getContext();
 
-            recyclerView = (RecyclerView) view.findViewById(R.id.list);
+            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
             mAdapter = new MedicationListAdapter(view.getContext(), medicationList, liveData);

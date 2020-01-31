@@ -3,10 +3,11 @@
     xmlns:map="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="?attr/actionBarSize">
 
     <FrameLayout
-        android:id="@+id/farmacy_map_container"
+        android:id="@+id/pharmacy_map_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
@@ -30,7 +31,7 @@
     </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/farmacy_load_map_container"
+        android:id="@+id/pharmacy_load_map_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -38,23 +39,23 @@
         android:visibility="visible">
 
         <ProgressBar
-            android:id="@+id/farmacy_load_map_progress"
+            android:id="@+id/pharmacy_load_map_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/pharmacy_load_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:layout_marginTop="@dimen/farmacy_text_margin_top"
+            android:layout_marginTop="@dimen/pharmacy_text_margin_top"
             android:textColor="@color/map_load_text"
-            android:textSize="@dimen/farmacy_load_text_size"
-            android:text="@string/farmacylist_load_text"/>
+            android:textSize="@dimen/pharmacy_load_text_size"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/farmacy_load_map_failure"
+        android:id="@+id/pharmacy_load_failure_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -62,20 +63,28 @@
         android:visibility="gone">
 
         <Button
-            android:id="@+id/farmacy_load_retry"
+            android:id="@+id/pharmacy_failure_manual_button"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
-            android:text="@string/farmacylist_load_retry_button"/>
+            android:text="@string/pharmacylist_load_manual_button"/>
+
+        <Button
+            android:id="@+id/pharmacy_failure_retry_button"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="@dimen/pharmacy_text_margin_top"
+            android:text="@string/pharmacylist_load_retry_button"/>
 
         <TextView
+            android:id="@+id/pharmacy_failure_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:layout_marginTop="@dimen/farmacy_text_margin_top"
+            android:layout_marginTop="@dimen/pharmacy_text_margin_top"
             android:textColor="@color/map_load_text"
-            android:textSize="@dimen/farmacy_load_text_size"
-            android:text="@string/farmacylist_load_failure_text"/>
+            android:textSize="@dimen/pharmacy_load_text_size"/>
 
     </LinearLayout>
 
