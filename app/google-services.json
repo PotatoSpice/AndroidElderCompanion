@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "963526794084",
+    "firebase_url": "https://assistentecmupratico.firebaseio.com",
+    "project_id": "assistentecmupratico",
+    "storage_bucket": "assistentecmupratico.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:963526794084:android:09fd237c82fe93ea187871",
+        "android_client_info": {
+          "package_name": "ipp.estg.lei.cmu.trabalhopratico"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "963526794084-aujr2npgn1l2vc4r2u6om9j857nb0oc5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkG0GG5mA03akqKeIxJP11P7BXh9HFG0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "963526794084-aujr2npgn1l2vc4r2u6om9j857nb0oc5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

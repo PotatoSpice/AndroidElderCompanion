@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_100"
+    android:orientation="vertical"
+    android:weightSum="4">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/login_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/icon"
+                style="@style/ThemeOverlay.FirebaseIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/auth_image_description"
+                android:src="@drawable/googleg_standard_color_18" />
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/title_bottom_margin"
+                android:text="@string/auth_title_text"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/land_title_text_size"
+                android:theme="@style/ThemeOverlay.MyTitleText" />
+
+            <TextView
+                android:id="@+id/status"
+                style="@style/ThemeOverlay.MyTextDetail"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/land_text_size"
+                android:text="@string/signed_out" />
+
+            <TextView
+                android:id="@+id/details"
+                style="@style/ThemeOverlay.MyTextDetail"
+                android:textSize="@dimen/land_text_size"
+                android:layout_height="wrap_content" />
+
+            <ProgressBar
+                android:id="@+id/authenticationProgress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="293dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/grey_300"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/emailPasswordFields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <EditText
+                    android:id="@+id/userEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/email_hint"
+                    android:inputType="textEmailAddress" />
+
+                <EditText
+                    android:id="@+id/userPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/password_hint"
+                    android:inputType="textPassword" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/emailPasswordButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/emailPasswordFields"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <Button
+                    android:id="@+id/signInButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/button_horizontal_margin"
+                    android:layout_marginEnd="@dimen/button_horizontal_margin"
+                    android:background="@color/colorAccent"
+                    android:text="@string/sign_in"
+                    android:theme="@style/ThemeOverlay.MyDarkButton" />
+
+                <Button
+                    android:id="@+id/createAccountButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/button_horizontal_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/button_horizontal_margin"
+                    android:background="@color/colorAccent"
+                    android:text="@string/create_account"
+                    android:theme="@style/ThemeOverlay.MyDarkButton" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

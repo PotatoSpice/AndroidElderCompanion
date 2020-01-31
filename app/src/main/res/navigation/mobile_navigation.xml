@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="ipp.estg.lei.cmu.trabalhopratico.medication.MedicationListFragment"
+        android:label="@string/title_medication"
+        tools:layout="@layout/fragment_medication_list" />
+
+    <fragment
+        android:id="@+id/navigation_farmacy"
+        android:name="ipp.estg.lei.cmu.trabalhopratico.pharmacy.PharmacyListMapFragment"
+        android:label="@string/title_farmacy"
+        tools:layout="@layout/fragment_pharmacy_list_map" />
+
+    <fragment
+        android:id="@+id/navigation_nutrition"
+        android:name="ipp.estg.lei.cmu.trabalhopratico.main.menu_tabs.games.GamesFragment"
+        android:label="@string/title_nutrition"
+        tools:layout="@layout/fragment_game_list" />
+
+    <fragment
+        android:id="@+id/navigation_games"
+        android:name="ipp.estg.lei.cmu.trabalhopratico.main.menu_tabs.games.GamesFragment"
+        android:label="@string/title_games"
+        tools:layout="@layout/fragment_game_list" />
+</navigation>

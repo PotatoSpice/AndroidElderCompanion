@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="?attr/actionBarSize">
+
+    <LinearLayout
+        android:id="@+id/home_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:name="ipp.estg.lei.cmu.trabalhopratico.medicacao.MedicationListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".medication.MedicationListFragment"
+            tools:listitem="@layout/fragment_medication_item" />
+
+    </LinearLayout>
+
+    <!-- android:layout_gravity="end|bottom" -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/home_addListEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/home_layout"
+        android:layout_alignRight="@+id/home_layout"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_add_alert_white_24dp"
+        app:layout_anchor="@id/home_layout"
+        app:layout_anchorGravity="bottom|right|end" />
+
+</RelativeLayout>
