@@ -180,7 +180,7 @@ public class AddMedicationDialog extends DialogFragment {
             if (dp > 24) {
                 dailyPeriod.setError("Periodo de toma não deve ser superior a 24 horas");
                 valid = false;
-            } else if (dt != 1 && dt * dp + ds > 24) {
+            } else if (ds + dp * (dt - 1) > 24) {
                 dailyPeriod.setError("Numero, período e início de toma da medicação excedem 24 horas");
                 valid = false;
             } else
