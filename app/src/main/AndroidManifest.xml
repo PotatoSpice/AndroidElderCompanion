@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -15,15 +16,19 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".game.GameActivity"
-            android:screenOrientation="portrait">
-        </activity>
+        <activity android:name=".nutricao.classes_nutricao.ClasseIntermediaria" />
+        <activity android:name=".nutricao.classes_nutricao.FoodTask" />
+        <activity android:name=".nutricao.classes_nutricao.ScanCodeActivity" />
+        <activity android:name=".nutricao.classes_nutricao.NutricaoMainActivity" />
+
+        <activity
+            android:name=".game.GameActivity"
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".main.MainMenuActivity"
             android:label="@string/title_activity_main_menu"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".LoginActivity"
@@ -39,7 +44,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key"/>
+            android:value="@string/google_maps_key" />
     </application>
 
 </manifest>
