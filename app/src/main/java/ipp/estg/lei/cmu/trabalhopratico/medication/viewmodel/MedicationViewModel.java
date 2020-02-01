@@ -1,4 +1,4 @@
-package ipp.estg.lei.cmu.trabalhopratico.medication.viewmodels;
+package ipp.estg.lei.cmu.trabalhopratico.medication.viewmodel;
 
 import android.app.Application;
 

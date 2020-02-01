@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 import ipp.estg.lei.cmu.trabalhopratico.game.classificacoes.models.Classificacao;
 import ipp.estg.lei.cmu.trabalhopratico.game.classificacoes.models.ClassificacaoDAO;
 
-@Database(entities = {Classificacao.class}, version = 1)
+@Database(entities = {Classificacao.class}, version = 1, exportSchema = false)
 public abstract class ClassiDatabase extends RoomDatabase {
 
     private static final int NUMBER_OF_THREADS=4;

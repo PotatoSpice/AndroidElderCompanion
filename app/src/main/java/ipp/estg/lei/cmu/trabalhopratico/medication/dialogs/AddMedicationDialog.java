@@ -1,8 +1,12 @@
 package ipp.estg.lei.cmu.trabalhopratico.medication.dialogs;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +28,8 @@ import java.util.Calendar;
 import ipp.estg.lei.cmu.trabalhopratico.R;
 import ipp.estg.lei.cmu.trabalhopratico.medication.database.MedicationDatabase;
 import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
-import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodels.MedicationViewModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.receivers.MedicationNotifyReceiver;
+import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodel.MedicationViewModel;
 
 public class AddMedicationDialog extends DialogFragment {
 
@@ -42,8 +47,8 @@ public class AddMedicationDialog extends DialogFragment {
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
             java.util.Date date;
             try {
-                String str = dayOfMonth + "/" + month + 1 + "/" + year;
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                String str = year + "-" + (month + 1) + "-" + dayOfMonth;
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 date = format.parse(str);
                 pickedDate = new Date(date.getTime());
             } catch (ParseException e) {}
@@ -89,13 +94,15 @@ public class AddMedicationDialog extends DialogFragment {
                     @Override
                     public void onClick(View view) {
                         if (validateData()) {
-                            liveData.addMedicationItem(new MedicationModel(title.getText().toString(),
+                            MedicationModel model = new MedicationModel(title.getText().toString(),
                                     medication.getText().toString(),
                                     Integer.parseInt(quantity.getText().toString()),
                                     Integer.parseInt(dailyStart.getText().toString()),
                                     Integer.parseInt(dailyTakes.getText().toString()),
                                     Integer.parseInt(dailyPeriod.getText().toString()),
-                                    pickedDate));
+                                    pickedDate);
+                            startAlarm(getContext(), model);
+                            liveData.addMedicationItem(model);
                             dialog.dismiss();
                         }
                     }
@@ -163,18 +170,24 @@ public class AddMedicationDialog extends DialogFragment {
         } else
             dailyTakes.setError(null);
 
-        int dp;
-        try {
-            dp = Integer.parseInt(dailyPeriod.getText().toString());
-        } catch (NumberFormatException exc) { dp = -1; }
-        if (dp > 24) {
-            dailyPeriod.setError("Periodo de toma não deve ser superior a 24 horas");
-            valid = false;
-        } else if (dt != 1 && dt * dp + ds > 24) {
-            dailyPeriod.setError("Numero, período e início de toma da medicação excedem 24 horas");
-            valid = false;
-        } else
-            dailyPeriod.setError(null);
+        if (dt != 1) {
+            int dp;
+            try {
+                dp = Integer.parseInt(dailyPeriod.getText().toString());
+            } catch (NumberFormatException exc) {
+                dp = -1;
+            }
+            if (dp > 24) {
+                dailyPeriod.setError("Periodo de toma não deve ser superior a 24 horas");
+                valid = false;
+            } else if (dt != 1 && dt * dp + ds > 24) {
+                dailyPeriod.setError("Numero, período e início de toma da medicação excedem 24 horas");
+                valid = false;
+            } else
+                dailyPeriod.setError(null);
+        } else {
+            dailyPeriod.setText("0");
+        }
 
         int q;
         try {
@@ -186,13 +199,59 @@ public class AddMedicationDialog extends DialogFragment {
         } else
             quantity.setError(null);
 
-        if (pickedDate.compareTo(new Date(System.currentTimeMillis())) < 0) {
+        if (pickedDate.before(new Date(System.currentTimeMillis()))) {
             pickDate.setError("Data não deve ser inferior ou igual à data atual");
             valid = false;
         } else
             pickDate.setError(null);
 
         return valid;
+    }
+
+    private void startAlarm(Context context, MedicationModel extra) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.HOUR_OF_DAY, extra.horaInicioTomaDiaria);
+
+        if (calendar.before(Calendar.getInstance())) {
+            calendar.add(Calendar.DATE, 1);
+        }
+
+        Intent intent = new Intent(getContext(), MedicationNotifyReceiver.class);
+        intent.setAction("ipp.estg.lei.cmu.trabalhopratico.medication.action.NOTIFY_ALARM");
+        intent.putExtra("data_fim", extra.dataFim.getTime());
+        intent.putExtra("titulo", extra.titulo);
+        intent.putExtra("medicamento", extra.medicamento);
+        intent.putExtra("numero_tomas", extra.numeroTomasDiarias);
+        intent.putExtra("hora_inicio", extra.horaInicioTomaDiaria);
+        intent.putExtra("periodo_toma", extra.periodoTomaDiaria);
+        intent.putExtra("quantidade_stock", extra.quantidadeAtualStock);
+
+        if (extra.numeroTomasDiarias == 1) {
+            intent.putExtra("is_in_period", false);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 1, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+        } else {
+            intent.putExtra("is_in_period", true);
+            intent.putExtra("takes_counter", 1);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 1, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+            for (int i = 0; i < extra.numeroTomasDiarias - 1; i++) {
+                calendar.add(Calendar.HOUR_OF_DAY, extra.periodoTomaDiaria);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            }
+            intent.putExtra("is_in_period", false);
+            calendar.add(Calendar.HOUR_OF_DAY, extra.periodoTomaDiaria);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
     }
 
 }

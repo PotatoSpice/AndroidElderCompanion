@@ -248,8 +248,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                Toast.makeText(this, "You clicked on settings!", Toast.LENGTH_LONG);
+            case R.id.action_change_password:
+                Toast.makeText(this, "Funcionalidade não implementada.", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

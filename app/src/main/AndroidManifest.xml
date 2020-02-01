@@ -42,6 +42,18 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".medication.receivers.MedicationNotifyReceiver">
+            <intent-filter>
+                <action android:name="ipp.estg.lei.cmu.trabalhopratico.medication.action.NOTIFY_ALARM" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".medication.receivers.MedicationTakingReceiver">
+            <intent-filter>
+                <action android:name="ipp.estg.lei.cmu.trabalhopratico.medication.action.TAKE_MEDICATION" />
+                <action android:name="ipp.estg.lei.cmu.trabalhopratico.medication.action.DISMISS_MEDICATION" />
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
