@@ -19,9 +19,9 @@
 
     <fragment
         android:id="@+id/navigation_nutrition"
-        android:name="ipp.estg.lei.cmu.trabalhopratico.main.menu_tabs.games.GamesFragment"
+        android:name="ipp.estg.lei.cmu.trabalhopratico.main.menu_tabs.nutrition.NutritionFragment"
         android:label="@string/title_nutrition"
-        tools:layout="@layout/fragment_game_list" />
+        tools:layout="@layout/fragment_nutrition" />
 
     <fragment
         android:id="@+id/navigation_games"

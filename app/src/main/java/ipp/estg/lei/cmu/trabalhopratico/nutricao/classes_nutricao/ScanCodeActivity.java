@@ -1,18 +1,25 @@
 package ipp.estg.lei.cmu.trabalhopratico.nutricao.classes_nutricao;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.zxing.Result;
+
+import java.util.Objects;
 
 import ipp.estg.lei.cmu.trabalhopratico.R;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+
+    private static final int CAMERA_REQUEST = 1888;
 
     public static String resultado;
     ZXingScannerView scannerView;
@@ -24,6 +31,22 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
 
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
+    }
+
+    private void requestPermissions() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},
+                    CAMERA_REQUEST);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        requestPermissions();
     }
 
     //Responsável por mostrar e guardar o resultado em resultado
