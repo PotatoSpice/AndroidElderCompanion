@@ -1,13 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="ipp.estg.lei.cmu.trabalhopratico.medicacao.MedicationListFragment"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    app:layoutManager="LinearLayoutManager"
-    tools:context=".medication.MedicationListFragment"
-    tools:listitem="@layout/fragment_medication_item" />
+    android:layout_height="match_parent">
+    <LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/game_card_view_calculus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/card_margin_sides"
+            android:layout_marginLeft="@dimen/card_margin_sides"
+            android:layout_marginTop="@dimen/card_margin_topbottom"
+            android:layout_marginBottom="@dimen/card_margin_topbottom"
+            android:elevation="3dp"
+            card_view:cardCornerRadius="@dimen/card_medication_radius">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/game_calculus_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:padding="@dimen/text_margin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/game_calculus_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/game_calculus_title"
+                        android:textColor="@color/meditem_light"
+                        android:textSize="@dimen/medication_title_bigger" />
+
+                    <TextView
+                        android:id="@+id/game_calculus_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/game_calculus_details_text"
+                        android:textColor="@color/meditem_light"
+                        android:textSize="@dimen/medication_title" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/game_calculus_icon"
+                    android:layout_width="300dp"
+                    android:layout_height="200dp"
+                    android:layout_below="@id/game_calculus_container"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_videogame_asset_black_24dp" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/game_card_view_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/card_margin_sides"
+            android:layout_marginLeft="@dimen/card_margin_sides"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="@dimen/card_margin_topbottom"
+            android:elevation="3dp"
+            card_view:cardCornerRadius="@dimen/card_medication_radius">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/game_more_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:padding="@dimen/text_margin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/game_more_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/game_more_title"
+                        android:textColor="@color/meditem_light"
+                        android:textSize="@dimen/medication_title_bigger" />
+
+                    <TextView
+                        android:id="@+id/game_more_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/game_more_details_text"
+                        android:textColor="@color/meditem_light"
+                        android:textSize="@dimen/medication_title" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/game_more_icon"
+                    android:layout_width="250dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_below="@id/game_more_container"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_dashboard_black_24dp" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:editable="false"
-        android:hint="@string/gameInformationText"
+        android:hint="@string/game_calculus_details_text"
         android:textAlignment="center"
         android:textSize="30sp" />
 

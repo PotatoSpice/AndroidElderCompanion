@@ -2,6 +2,9 @@ package ipp.estg.lei.cmu.trabalhopratico.medication;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -10,10 +13,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -26,7 +25,7 @@ import ipp.estg.lei.cmu.trabalhopratico.medication.adapters.MedicationListAdapte
 import ipp.estg.lei.cmu.trabalhopratico.medication.database.MedicationDatabase;
 import ipp.estg.lei.cmu.trabalhopratico.medication.dialogs.AddMedicationDialog;
 import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
-import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodels.MedicationViewModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodel.MedicationViewModel;
 
 public class MedicationListFragment extends Fragment {
 

@@ -1,8 +1,5 @@
 package ipp.estg.lei.cmu.trabalhopratico.medication.adapters;
 
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,12 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ipp.estg.lei.cmu.trabalhopratico.R;
-import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
-import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodels.MedicationViewModel;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.sql.Date;
 import java.util.List;
+
+import ipp.estg.lei.cmu.trabalhopratico.R;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodel.MedicationViewModel;
 
 public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAdapter.MedicationViewHolder> {
 
@@ -56,13 +56,13 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
             holder.mPeriodoTomaDiaria.setVisibility(View.VISIBLE);
             holder.mPeriodoTomaDiaria.setText(mContext.getString(R.string.medication_dailyperiod, med.periodoTomaDiaria));
         }
-        holder.mDataToma.setText(mContext.getString(R.string.medication_enddate, med.dataToma.toString()));
+        holder.mDataToma.setText(mContext.getString(R.string.medication_enddate, med.dataFim.toString()));
         holder.mHoraInicioTomaDiaria.setText(mContext.getString(R.string.medication_dailystart, med.horaInicioTomaDiaria));
 
         // Se ainda não tiver passado a data da toma da medicação registada (menor ou próprio dia)
         // Senão, o registo passou a validade acionando o botão para remover.
-        if (med.dataToma.compareTo(new Date(System.currentTimeMillis())) > 0
-                || DateUtils.isToday(med.dataToma.getTime())
+        if (med.dataFim.compareTo(new Date(System.currentTimeMillis())) > 0
+                || DateUtils.isToday(med.dataFim.getTime())
                 && !mContext.getSharedPreferences("conf", Context.MODE_PRIVATE).getBoolean("isDev", false)) {
             holder.mIconDelete.setVisibility(View.GONE);
             holder.mView.findViewById(R.id.meditem_detalhestoma)
