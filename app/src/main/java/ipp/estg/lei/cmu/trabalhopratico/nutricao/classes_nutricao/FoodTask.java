@@ -1,6 +1,7 @@
 package ipp.estg.lei.cmu.trabalhopratico.nutricao.classes_nutricao;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ public class FoodTask extends AppCompatActivity {
 
     DataService mService;
     TextView txtData;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,16 +30,36 @@ public class FoodTask extends AppCompatActivity {
 
         txtData = (TextView) findViewById(R.id.dataTextView);
 
+        imageView = (ImageView) findViewById(R.id.nutrientIcon);
+
         getDataAddress();
     }
 
     private void getDataAddress() {
 
+
         mService.getFood("api/v0/prodfuct/" + String.valueOf(ScanCodeActivity.resultado) + ".json").enqueue(new Callback<FoodModel>() {
             @Override
             public void onResponse(Call<FoodModel> call, Response<FoodModel> response) {
-                txtData.setText("Energy Unit: " + response.body().getEnergyUnit() + "\nEnergy Value:" + response.body().getEnergyValue() +
-                        "\n\nFat Unit: " + response.body().getFatUnit() + "\nFat Value:" + response.body().getFatValue());
+                String avisos = "\n\n";
+
+                if (response.body().getSugarsValue() >= 10)
+                    avisos = avisos + "Alert: High Sugar Level\n-diabetes\n";
+                if (response.body().getSaltValue() >= 10)
+                    avisos = avisos + "Alert: High Salt Level\n\n" + "-hypertension\n";
+                if (response.body().getFatValue() >= 10)
+                    avisos = avisos + "Alert: High Fat Level\n-\n" + "obesity\n";
+                if (response.body().getSaturatedFatValue() >= 10)
+                    avisos = avisos + "Alert: High Saturated Fat Level\n" +
+                            "-cholesterol\n";
+
+                txtData.setText("\nEnergy Value: " + response.body().getEnergyValue() + response.body().getEnergyUnit()
+                        + "\nFat Value: " + response.body().getFatValue() + response.body().getFatUnit()
+                        + "\nSugar Value: " + response.body().getSugarsValue() + response.body().getSugarsUnit()
+                        + "\nSalt Value: " + response.body().getSaltValue() + response.body().getSaltUnit()
+                        + "\nSaturated Fat Value: " + response.body().getSaturatedFatValue() + response.body().getSaturatedFatUnit()
+                        + "\nProteins Value: " + response.body().getSaltValue() + response.body().getProteinsUnit()
+                        + avisos);
             }
 
             @Override
