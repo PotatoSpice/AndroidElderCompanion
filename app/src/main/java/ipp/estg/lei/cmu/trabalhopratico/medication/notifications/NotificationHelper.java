@@ -1,4 +1,4 @@
-package ipp.estg.lei.cmu.trabalhopratico.medication.receivers;
+package ipp.estg.lei.cmu.trabalhopratico.medication.notifications;
 
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import ipp.estg.lei.cmu.trabalhopratico.R;
 import ipp.estg.lei.cmu.trabalhopratico.main.MainMenuActivity;
 import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.receivers.MedicationTakingReceiver;
 
 public class NotificationHelper extends ContextWrapper {
     public static final String channelID = "alarmNotifID";
@@ -54,15 +55,20 @@ public class NotificationHelper extends ContextWrapper {
         return mManager;
     }
 
-    public NotificationCompat.Builder getMedicationNotification(String titulo, String medicamento) {
-        Intent dismiss = new Intent(this, MedicationTakingReceiver.class);
-        dismiss.setAction("ipp.estg.lei.cmu.trabalhopratico.medication.action.DISMISS_MEDICATION");
-        Intent take = new Intent(this, MedicationTakingReceiver.class);
-        dismiss.setAction("ipp.estg.lei.cmu.trabalhopratico.medication.action.TAKE_MEDICATION");
+    public NotificationCompat.Builder getMedicationNotification(String id, String titulo, String medicamento) {
+        Intent dismiss = new Intent(this, MedicationTakingReceiver.class)
+                .setAction("ipp.estg.lei.cmu.trabalhopratico.medication.action.DISMISS_MEDICATION")
+                .putExtra("med_id", id);
+        Intent take = new Intent(this, MedicationTakingReceiver.class)
+                .setAction("ipp.estg.lei.cmu.trabalhopratico.medication.action.TAKE_MEDICATION")
+                .putExtra("med_id", id);
+
         return new NotificationCompat.Builder(this, channelID)
                 .setSmallIcon(R.drawable.ic_add_alert_white_24dp)
                 .setContentTitle("Toma de Medicação!")
-                .setContentText("Não se esqueça do lembrete " + titulo + ",\npara a medicação " + medicamento + "!")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Não se esqueça do lembrete \"" + titulo + "\", para a medicação " + medicamento + "!" +
+                                "\nVeja os detalhes na lista de registos."))
                 .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0))
                 // se o utilizador der swipe na notificação
                 .setDeleteIntent(PendingIntent.getBroadcast(this, 0,

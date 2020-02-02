@@ -25,7 +25,7 @@ import ipp.estg.lei.cmu.trabalhopratico.medication.adapters.MedicationListAdapte
 import ipp.estg.lei.cmu.trabalhopratico.medication.database.MedicationDatabase;
 import ipp.estg.lei.cmu.trabalhopratico.medication.dialogs.AddMedicationDialog;
 import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
-import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodel.MedicationViewModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.viewmodel.MedicationViewModel;
 
 public class MedicationListFragment extends Fragment {
 

@@ -25,6 +25,7 @@
     <string name="title_activity_main">MainActivity</string>
 
     <string name="action_emergency_contact">Contacto Emergência</string>
+    <string name="action_alarms_cancel">Cancelar Alarmes</string>
     <string name="action_change_password">Atualizar Password</string>
     <string name="action_signout">Encerrar Sessão</string>
     <string name="action_remover_registo">Remover Registo</string>

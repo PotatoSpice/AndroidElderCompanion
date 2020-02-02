@@ -1,11 +1,15 @@
 package ipp.estg.lei.cmu.trabalhopratico.main;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,9 +28,14 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.List;
+
 import ipp.estg.lei.cmu.trabalhopratico.LoginActivity;
 import ipp.estg.lei.cmu.trabalhopratico.R;
-import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodel.MedicationViewModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.database.MedicationDatabase;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.receivers.MedicationNotifyReceiver;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.viewmodel.MedicationViewModel;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -60,7 +69,42 @@ public class MainMenuActivity extends AppCompatActivity {
                 .contains("contacto_emergencia"))
             createChangeMainContactDialog(this).show();
 
-        // VERIFICAR REGISTOS DA MEDICAÇÃO E ATIVAR ALARMES
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_bar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_alarms_cancel:
+                createCancelAlarmsDialog(this).show();
+                // IMPORTANTE, DAR A POSSIBILIDADE DE REATIVAR OS ALARMES PARA A MEDICAÇAO
+                // (provavelmente necessário guardar todos os alarmes numa base de dados)
+                return true;
+            case R.id.action_emergency_contact:
+                createChangeMainContactDialog(this).show();
+                return true;
+            case R.id.action_signout:
+                Intent logoutIntent = new Intent(this, LoginActivity.class);
+                logoutIntent.setAction("ipp.estg.lei.cmu.trabalhopratico.SIGN_OUT_USER");
+                startActivity(logoutIntent);
+                finish(); // remover esta activity da stack para prevenir que o user volte para trás
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
     }
 
     private AlertDialog createChangeMainContactDialog(Context context) {
@@ -112,34 +156,59 @@ public class MainMenuActivity extends AppCompatActivity {
         return dialog;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_bar_menu, menu);
-        return true;
+    private AlertDialog createCancelAlarmsDialog(Context context) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Tem a certeza que pretende cancelar todos os alarmes ativos?" +
+                "\nNão poderá voltar a ativa-los!")
+                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        cancelAllAlarms();
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.dismiss();
+                    }
+                })
+                .setView(inputEmergencyContact);
+        return builder.create();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_emergency_contact:
-                createChangeMainContactDialog(this).show();
-                return true;
-            case R.id.action_signout:
-                Intent logoutIntent = new Intent(this, LoginActivity.class);
-                logoutIntent.setAction("ipp.estg.lei.cmu.trabalhopratico.SIGN_OUT_USER");
-                startActivity(logoutIntent);
-                finish(); // remover esta activity da stack para prevenir que o user volte para trás
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+    private void cancelAllAlarms() {
+        MedicationDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                PendingIntent pendingIntent;
+                AlarmManager alarmManager = (AlarmManager) getApplication().getSystemService(Context.ALARM_SERVICE);
+                if (alarmManager != null) {
+                    List<MedicationModel> list = MedicationDatabase.getDatabase(getApplicationContext())
+                            .getMedicationDao().loadAllItems();
+                    for (MedicationModel m : list) {
+                        pendingIntent = PendingIntent.getBroadcast(
+                                getApplicationContext(), 1,
+                                new Intent(getApplicationContext(), MedicationNotifyReceiver.class)
+                                        .setAction("ipp.estg.lei.cmu.trabalhopratico.medication.action.NOTIFY_ALARM")
+                                        .setData(Uri.parse("" + m.id))
+                                        .putExtra("data_fim", m.dataFim)
+                                        .putExtra("titulo", m.titulo)
+                                        .putExtra("medicamento", m.medicamento)
+                                        .putExtra("numero_tomas", m.numeroTomasDiarias)
+                                        .putExtra("hora_inicio", m.horaInicioTomaDiaria)
+                                        .putExtra("periodo_toma", m.periodoTomaDiaria)
+                                        .putExtra("quantidade_stock", m.quantidadeAtualStock),
+                                PendingIntent.FLAG_UPDATE_CURRENT);
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+                        alarmManager.cancel(pendingIntent);
+                    }
+                    Toast.makeText(getApplicationContext(), "Cancelados todos os alarmes",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.w("MAINMENU", "Couln't get alarm manager to stop all alarms!");
+                }
+            }
+        });
     }
 }

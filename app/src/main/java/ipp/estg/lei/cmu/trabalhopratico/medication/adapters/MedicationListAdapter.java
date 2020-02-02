@@ -19,7 +19,7 @@ import java.util.List;
 
 import ipp.estg.lei.cmu.trabalhopratico.R;
 import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
-import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodel.MedicationViewModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.viewmodel.MedicationViewModel;
 
 public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAdapter.MedicationViewHolder> {
 

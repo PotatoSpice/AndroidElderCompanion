@@ -7,7 +7,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +31,7 @@ import ipp.estg.lei.cmu.trabalhopratico.R;
 import ipp.estg.lei.cmu.trabalhopratico.medication.database.MedicationDatabase;
 import ipp.estg.lei.cmu.trabalhopratico.medication.models.MedicationModel;
 import ipp.estg.lei.cmu.trabalhopratico.medication.receivers.MedicationNotifyReceiver;
-import ipp.estg.lei.cmu.trabalhopratico.medication.viewmodel.MedicationViewModel;
+import ipp.estg.lei.cmu.trabalhopratico.medication.models.viewmodel.MedicationViewModel;
 
 public class AddMedicationDialog extends DialogFragment {
 
@@ -45,12 +47,16 @@ public class AddMedicationDialog extends DialogFragment {
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            java.util.Date date;
             try {
                 String str = year + "-" + (month + 1) + "-" + dayOfMonth;
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                date = format.parse(str);
-                pickedDate = new Date(date.getTime());
+                Calendar c = Calendar.getInstance();
+                c.setTimeInMillis(format.parse(str).getTime());
+                c.set(Calendar.HOUR_OF_DAY, 0);
+                c.set(Calendar.MINUTE, 0);
+                c.set(Calendar.SECOND, 0);
+                c.set(Calendar.MILLISECOND, 0);
+                pickedDate = new Date(c.getTimeInMillis());
             } catch (ParseException e) {}
             Toast.makeText(getContext(), "Data definida: " + pickedDate.toString(), Toast.LENGTH_LONG).show();
         }
@@ -200,7 +206,7 @@ public class AddMedicationDialog extends DialogFragment {
             quantity.setError(null);
 
         if (pickedDate.before(new Date(System.currentTimeMillis()))) {
-            pickDate.setError("Data não deve ser inferior ou igual à data atual");
+            pickDate.setError("Data não deve ser inferior à data atual");
             valid = false;
         } else
             pickDate.setError(null);
@@ -214,27 +220,27 @@ public class AddMedicationDialog extends DialogFragment {
         Calendar calendar = Calendar.getInstance();
 
         calendar.set(Calendar.HOUR_OF_DAY, extra.horaInicioTomaDiaria);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
-        if (calendar.before(Calendar.getInstance())) {
-            calendar.add(Calendar.DATE, 1);
-        }
-
-        Intent intent = new Intent(getContext(), MedicationNotifyReceiver.class);
-        intent.setAction("ipp.estg.lei.cmu.trabalhopratico.medication.action.NOTIFY_ALARM");
-        intent.putExtra("data_fim", extra.dataFim.getTime());
-        intent.putExtra("titulo", extra.titulo);
-        intent.putExtra("medicamento", extra.medicamento);
-        intent.putExtra("numero_tomas", extra.numeroTomasDiarias);
-        intent.putExtra("hora_inicio", extra.horaInicioTomaDiaria);
-        intent.putExtra("periodo_toma", extra.periodoTomaDiaria);
-        intent.putExtra("quantidade_stock", extra.quantidadeAtualStock);
+        Intent intent = new Intent(getContext(), MedicationNotifyReceiver.class)
+                .setAction("ipp.estg.lei.cmu.trabalhopratico.medication.action.NOTIFY_ALARM")
+                .setData(Uri.parse("" + extra.id))
+                .putExtra("data_fim", extra.dataFim.getTime())
+                .putExtra("titulo", extra.titulo)
+                .putExtra("medicamento", extra.medicamento)
+                .putExtra("numero_tomas", extra.numeroTomasDiarias)
+                .putExtra("hora_inicio", extra.horaInicioTomaDiaria)
+                .putExtra("periodo_toma", extra.periodoTomaDiaria)
+                .putExtra("quantidade_stock", extra.quantidadeAtualStock);
 
         if (extra.numeroTomasDiarias == 1) {
             intent.putExtra("is_in_period", false);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 1, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
 
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
         } else {
             intent.putExtra("is_in_period", true);
@@ -242,15 +248,8 @@ public class AddMedicationDialog extends DialogFragment {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 1, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
 
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
-            for (int i = 0; i < extra.numeroTomasDiarias - 1; i++) {
-                calendar.add(Calendar.HOUR_OF_DAY, extra.periodoTomaDiaria);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-            }
-            intent.putExtra("is_in_period", false);
             calendar.add(Calendar.HOUR_OF_DAY, extra.periodoTomaDiaria);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
     }
 
